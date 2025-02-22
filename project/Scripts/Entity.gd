@@ -18,6 +18,8 @@ func _ready() -> void:
 	$Selected.play()
 	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
+	if(player):
+		$Entity.play("idle_combat")
 
 func remove_health(val: int):
 	health -= val

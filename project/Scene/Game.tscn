@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://go68735wem6n"]
+[gd_scene load_steps=15 format=3 uid="uid://go68735wem6n"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
 [ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
 [ext_resource type="PackedScene" uid="uid://c5nl02wkbim7b" path="res://Objects/Entity.tscn" id="3_hkwdk"]
 [ext_resource type="Texture2D" uid="uid://kpp8n3xjxohj" path="res://Assets/2D/Environment/dungeonWall.png" id="4_np2c7"]
+[ext_resource type="Texture2D" uid="uid://ooy5qvda47f2" path="res://Assets/2D/Characters/PlayerCharacter.png" id="5_bp1ms"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -17,6 +18,54 @@ sources/0 = SubResource("TileSetAtlasSource_bdu42")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_w2k25"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6hgc"]
+atlas = ExtResource("5_bp1ms")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gnh6"]
+atlas = ExtResource("5_bp1ms")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ia5sj"]
+atlas = ExtResource("5_bp1ms")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04l4g"]
+atlas = ExtResource("5_bp1ms")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4kik8"]
+atlas = ExtResource("5_bp1ms")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dx8ww"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6hgc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0gnh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ia5sj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04l4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4kik8")
+}],
+"loop": true,
+"name": &"idle_combat",
+"speed": 5.0
+}]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -44,11 +93,6 @@ layout_mode = 2
 disabled = true
 text = "Roll!"
 
-[node name="Retreat" type="Button" parent="BoxContainer"]
-layout_mode = 2
-disabled = true
-text = "Retreat!"
-
 [node name="Items" type="Button" parent="BoxContainer"]
 layout_mode = 2
 text = "Items"
@@ -70,9 +114,15 @@ player = true
 max_health = 50
 health = 50
 
+[node name="Entity" parent="Players/Player" index="0"]
+sprite_frames = SubResource("SpriteFrames_dx8ww")
+animation = &"idle_combat"
+
 [node name="EnemiesPlacement" type="Node2D" parent="Players"]
 position = Vector2(350, 0)
 
 [connection signal="button_down" from="BoxContainer/Roll" to="." method="_on_roll_button_down"]
 [connection signal="die_finished" from="SubViewport/DiceRoom" to="." method="_on_dice_room_die_finished"]
 [connection signal="selected" from="Players/Player" to="." method="_on_player_selected"]
+
+[editable path="Players/Player"]
