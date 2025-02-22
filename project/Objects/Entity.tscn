@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c5nl02wkbim7b"]
+[gd_scene load_steps=17 format=3 uid="uid://c5nl02wkbim7b"]
 
 [ext_resource type="Texture2D" uid="uid://ct4bjx3as167m" path="res://Assets/2D/Characters/testEnemy.png" id="1_73ycd"]
 [ext_resource type="Script" path="res://Scripts/Entity.gd" id="2_gfcu3"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://d0pb7eqew6wp8" path="res://Assets/2D/UI/healthBarOver.png" id="4_sopl8"]
 [ext_resource type="Texture2D" uid="uid://qdl1cvmag4ui" path="res://Assets/2D/UI/healthBarProgress.png" id="5_ec0nj"]
 [ext_resource type="FontFile" uid="uid://cxlec2b531som" path="res://Assets/Fonts/Bitmgothic.ttf" id="6_falqk"]
+[ext_resource type="AudioStream" uid="uid://bwa4oetippm55" path="res://Assets/Sound/hit.wav" id="8_yt5im"]
+[ext_resource type="AudioStream" uid="uid://dimqjolfr2cch" path="res://Assets/Sound/Heal.wav" id="9_pnqyt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iud1v"]
 animations = [{
@@ -99,5 +101,11 @@ scale = Vector2(0.818306, 0.84798)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-2.44407, 0.155449)
 shape = SubResource("RectangleShape2D_lxgmg")
+
+[node name="HitPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_yt5im")
+
+[node name="HealPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_pnqyt")
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

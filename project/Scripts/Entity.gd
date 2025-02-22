@@ -28,6 +28,10 @@ func remove_health(val: int):
 	health = min(max_health, health)
 	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
+	if(!player && val > 0):
+		$HitPlayer.play()
+	if(val < 0):
+		$HealPlayer.play()
 
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
