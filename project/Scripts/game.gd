@@ -5,10 +5,11 @@ extends Control
 @onready var dice_spawner: spawner = $"SubViewport/DiceRoom"
 
 @onready var ent_preload = preload("res://Objects/Entity.tscn")
+@onready var enemies_node = $Players/EnemiesPlacement
 
 var entities: Array[Entity] = []
 
-var budget = 2
+var budget = 1
 
 # Turn 0 means players turn.
 var turn = 0
@@ -16,6 +17,7 @@ var turn = 0
 var selected: Entity = null
 
 func _ready() -> void:
+	randomize()
 	entities.append($Players/Player)
 	spawn_wave()
 	_on_dice_room_die_finished([])
@@ -23,18 +25,23 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if(turn != 0 || ( turn == 0 && selected == null ) ):
 		roll_button.disabled = true
-	else:
-		roll_button.disabled = false
 	for i in entities.duplicate():
 		if(i.health <= 0):
 			entities.erase(i)
 			i.queue_free()
 	if(len(dice_spawner.dice) > 0):
 		var vals = dice_spawner.get_cur_values()
+		var count = 0
 		$DiceMath.text = "[center]0"
 		for i in vals:
+			$DiceMath.text += "[color=" + dice_spawner.dice[count].mycolor.to_html() + "]"
 			$DiceMath.text += Lookup.lookup_operation(i)
 			$DiceMath.text += str(Lookup.lookup_realval(i))
+			count+=1
+	if(len(enemies_node.get_children())):
+		## round is over, good job!
+		$LeftDoor.disabled = false
+		$RightDoor.disabled = false
 
 
 func _on_dice_room_die_finished(values: Array) -> void:
@@ -56,7 +63,9 @@ func _on_dice_room_die_finished(values: Array) -> void:
 	handle_turn()
 
 func handle_turn():
-	if turn == 0: return
+	if turn == 0: 
+		roll_button.disabled = false
+		return
 	dice_spawner.roll_dice(entities[turn].dice_values, entities[turn].dice_color_values)
 
 func spawn_wave():
@@ -75,7 +84,18 @@ func _on_player_selected(node: Entity) -> void:
 		selected.get_node("Selected").hide()
 	selected = node
 	selected.get_node("Selected").show()
+	if(turn == 0):
+		roll_button.disabled = false
 
 
 func _on_roll_pressed() -> void:
-	dice_spawner.roll_dice([[0,1,2,3,4,5],[9,9,9,9,9,9]], [Color.BLUE,Color.BLACK])
+	dice_spawner.roll_dice($DiceManager.get_player_die_values(), $DiceManager.get_player_die_colors())
+	roll_button.disabled = true
+
+
+func _on_left_door_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_right_door_pressed() -> void:
+	pass # Replace with function body.

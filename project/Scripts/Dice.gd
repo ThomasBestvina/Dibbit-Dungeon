@@ -2,6 +2,7 @@ extends RigidBody3D
 
 
 @export var random_fling_force: float = 50
+var mycolor: Color
 
 var sides
 
@@ -20,6 +21,7 @@ func init(die_sides, color: Color):
 	cube.material_override = cube.get_active_material(0).duplicate()
 	cube.material_override.albedo_color = color
 	global_position = Vector3(randf_range(-1,1),randf_range(-1,1),randf_range(-1,1))/4
+	mycolor = color
 
 func get_current_value():
 	var highest_y_axis = -INF
