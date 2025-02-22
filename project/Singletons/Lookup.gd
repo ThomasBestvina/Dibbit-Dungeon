@@ -54,7 +54,7 @@ func potion_description_lookup(id: String) -> String:
 		"defend":
 			return "Decreases the amount of damage you take by 50%"
 		"reroll":
-			return "Rolls twice, keeps higher value."
+			return "Rolls twice your dice"
 	return ""
 
 func calculate(cur_num: int, val: int):

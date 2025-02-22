@@ -35,6 +35,8 @@ func generate_shop():
 	
 	$Buy1/Description.text = Lookup.potion_description_lookup(potion1)
 	$Buy0/Description.text = Lookup.potion_description_lookup(potion2)
+	$Buy1/PotionPanel.id = potion1
+	$Buy0/PotionPanel.id = potion2
 
 func get_random_potion():
 	var lst = ["heal","healroll","modroll","defend","reroll"]
@@ -44,15 +46,15 @@ func _on_buy_0_pressed() -> void:
 	if(PlayerResources.money >= die_cost && $Buy0/PotionPanel.visible):
 		PlayerResources.money -= die_cost
 		PlayerResources.items.append($Buy0/PotionPanel.id)
-		$Buy2/DieRep.hide()
+		$Buy0/PotionPanel.hide()
 
 
 
 func _on_buy_1_pressed() -> void:
-	if(PlayerResources.money >= die_cost && $Buy0/PotionPanel.visible):
+	if(PlayerResources.money >= die_cost && $Buy1/PotionPanel.visible):
 		PlayerResources.money -= die_cost
-		PlayerResources.items.append($Buy0/PotionPanel.id)
-		$Buy2/DieRep.hide()
+		PlayerResources.items.append($Buy1/PotionPanel.id)
+		$Buy1/PotionPanel.hide()
 
 
 func _on_buy_2_pressed() -> void:

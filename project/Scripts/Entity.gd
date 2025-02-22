@@ -36,8 +36,8 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 			emit_signal("selected",self)
 
 func add_potion(id):
-	items.append(id)
 	var potion = potion_pre.instantiate()
 	$Potions.add_child(potion)
 	potion.id = id
-	potion.get_node("Sprite2D").modulate = Lookup.potion_color_lookup(id)
+	print(potion.id)
+	potion.modulate = Lookup.potion_color_lookup(id)

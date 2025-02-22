@@ -37,53 +37,110 @@ func _process(delta: float) -> void:
 		var vals = dice_spawner.get_cur_values()
 		var count = 0
 		$DiceMath.text = "[center]0"
-		var total = 0
+		var total: int = 0
 		for i in vals:
 			$DiceMath.text += "[color=" + dice_spawner.dice[count].mycolor.to_html() + "]"
 			$DiceMath.text += Lookup.lookup_operation(i)
 			$DiceMath.text += str(Lookup.lookup_realval(i))
 			total = Lookup.calculate(total, i)
 			count+=1
-		$DiceMath.text += "[color=#FFFFFF]=" + str(total)
+		var defend: bool = false
+		var healroll: bool = false
+		var modroll: bool = false
+		for i in $Players/Player/Potions.get_children():
+			match i.id:
+				"healroll":
+					healroll = true
+				"defend":
+					defend = true
+				"modroll":
+					modroll = true
+		
+		if(turn == 0 && modroll):
+			total *= 1.5
+			if(!healroll):
+				$DiceMath.text += "[color=#ff3300]=" + str(total)
+			if(healroll):
+				$DiceMath.text += "[color=#ff3300]=" + str(total) + "[color=009933], " + str(total*0.1)
+		elif(turn != 0 && defend):
+			total *= 0.5
+			$DiceMath.text += "[color=#666666]=" + str(total)
+		else:
+			if(!healroll):
+				$DiceMath.text += "[color=#FFFFFF]=" + str(total)
+			if(healroll):
+				$DiceMath.text += "[color=#FFFFFF]=" + str(total) + "[color=009933], " + str(total*0.1)
+	
+	if(turn == 0 && len(dice_spawner.dice) == 0):
+		items_button.disabled = false
+	else:
+		items_button.disabled = true
+	
 	if(len(enemies_node.get_children())  == 0 && !rooms_picked && !$Shop.visible):
 		## round is over, good job!
 		$Doors/LeftDoor.disabled = false
 		$Doors/RightDoor.disabled = false
 		pick_rooms()
 		rooms_picked = true
+	
+	for i in $Players/Player/Potions.get_children():
+		if i.id == "heal":
+			$Players/Player.remove_health(-$Players/Player.max_health*0.25)
 
 func pick_rooms():
-	if()
+	if(int(budget) == 3):
+		
+		$Doors/LeftDoor/Label.text = "s"
+		$Doors/RightDoor/Label.text = "f"
+		return
 	# Pick from 3 rooms, campfire, shop, combat.
 	# Only 1 and shop can be selected, any number of combats (well really 2)
 	# Lets say 1/3 campfire, 2/5 shop, rest combat.
 	var cmpfire: bool = randi_range(1,3) == 3
 	var shop: bool = randi_range(1,5) <= 2
 	if cmpfire:
-		$Doors/LeftDoor.text = "c"
+		$Doors/LeftDoor/Label.text = "c"
 		cmpfire = false
 	elif shop:
-		$Doors/LeftDoor.text = "s"
+		$Doors/LeftDoor/Label.text = "s"
 		shop = false
 	else:
-		$Doors/LeftDoor.text = "f"
+		$Doors/LeftDoor/Label.text = "f"
 	
 	if shop:
-		$Doors/RightDoor.text = "s"
+		$Doors/RightDoor/Label.text = "s"
 		shop = false
 	else:
-		$Doors/RightDoor.text = "f"
+		$Doors/RightDoor/Label.text = "f"
 
 func _on_dice_room_die_finished(values: Array) -> void:
 	if(len(values) == 0): return
-	
+	var defend: bool = false
+	var healroll: bool = false
+	var modroll: bool = false
+	for i in $Players/Player/Potions.get_children():
+		match i.id:
+			"healroll":
+				healroll = true
+			"defend":
+				defend = true
+			"modroll":
+				modroll = true
 	var damage: int = 0
 	for i in values:
 		damage = Lookup.calculate(damage, i)
 	if(turn == 0):
-		selected.remove_health(damage)
+		if(modroll):
+			selected.remove_health(damage*1.5)
+		else:
+			selected.remove_health(damage)
+		if(healroll):
+			selected.remove_health(-damage * 0.1)
 	else:
-		entities[0].remove_health(damage)
+		if(defend):
+			entities[0].remove_health(damage * 0.5)
+		else:
+			entities[0].remove_health(damage)
 	kill_dead_enemies()
 	turn += 1
 	turn = turn % len(entities)
@@ -91,6 +148,9 @@ func _on_dice_room_die_finished(values: Array) -> void:
 
 func handle_turn():
 	if turn == 0: 
+		for i in $Players/Player/Potions.get_children():
+			i.queue_free()
+		items_button.disabled = false
 		roll_button.disabled = false
 		return
 	dice_spawner.roll_dice(entities[turn].dice_values, entities[turn].dice_color_values)
@@ -143,6 +203,7 @@ func spawn_wave():
 
 
 func _on_player_selected(node: Entity) -> void:
+	if(len(dice_spawner.dice) != 0): return
 	if(selected != null):
 		selected.get_node("Selected").hide()
 	selected = node
@@ -152,8 +213,16 @@ func _on_player_selected(node: Entity) -> void:
 
 
 func _on_roll_pressed() -> void:
+	var double_roll = false
+	for i in $Players/Player/Potions.get_children():
+		if i.id == "reroll":
+			double_roll = true
 	dice_spawner.roll_dice($DiceManager.get_player_die_values(), $DiceManager.get_player_die_colors())
+	if(double_roll):
+		dice_spawner.roll_dice($DiceManager.get_player_die_values(), $DiceManager.get_player_die_colors())
 	roll_button.disabled = true
+	if(get_node("remove") != null):
+		get_node("remove").queue_free()
 
 func kill_dead_enemies():
 	for i: Entity in entities.duplicate():
@@ -199,24 +268,27 @@ func manage_room_change(room: String):
 
 
 func _on_left_door_pressed() -> void:
-	manage_room_change($Doors/LeftDoor.text)
+	manage_room_change($Doors/LeftDoor/Label.text)
 
 
 func _on_right_door_pressed() -> void:
-	manage_room_change($Doors/RightDoor.text)
+	manage_room_change($Doors/RightDoor/Label.text)
 
 
 func _on_texture_button_pressed() -> void:
-	for i in $PotionList.get_children():
-		queue_free()
+	var list = VBoxContainer.new()
+	add_child(list)
+	list.position = Vector2(160,85)
+	list.name = "remove"
 	for i in PlayerResources.items:
 		var but = potion_button_preload.instantiate()
 		but.init(i)
-		$PotionList.add_child(but)
-	$PotionList.show()
-	$PotionCancel.show()
+		but.modulate = Lookup.potion_color_lookup(i)
+		list.add_child(but)
+	$PotionCancel.position.x += 200
 
 
 func _on_potion_cancel_pressed() -> void:
-	$PotionList.hide()
-	$PotionCancel.hide()
+	$PotionCancel.position.x -= 200
+	if(get_node("remove") != null):
+		get_node("remove").queue_free()

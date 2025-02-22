@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://h4q30iacukt1"]
 
-[ext_resource type="Texture2D" uid="uid://ruglhga3vyjw" path="res://Assets/2D/UI/Potion.png" id="1_c1msy"]
 [ext_resource type="Script" path="res://Scripts/potion.gd" id="1_huo3l"]
+[ext_resource type="Texture2D" uid="uid://de8fcwm3os5lu" path="res://Assets/2D/items/potion.png" id="2_d12em"]
 
 [node name="PotionPanel" type="Panel"]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(8, 8)
+custom_minimum_size = Vector2(18, 32)
 offset_right = 8.0
 offset_bottom = 8.0
 script = ExtResource("1_huo3l")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(4, 4)
-texture = ExtResource("1_c1msy")
+position = Vector2(9, 15)
+texture = ExtResource("2_d12em")

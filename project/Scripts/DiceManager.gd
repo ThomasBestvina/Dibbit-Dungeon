@@ -2,10 +2,16 @@ extends HFlowContainer
 
 @onready var dierep = preload("res://Objects/DieRep.tscn")
 
+@onready var trash: Area2D = get_parent().get_node("Trash/Area2D")
+
+var hover_trash = false
+
 var dragged_item: Panel = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	trash.connect("mouse_entered",_trash_entered)
+	trash.connect("mouse_exited",_trash_left)
 	for i: DiceRep in get_children():
 		i.connect("mouse_on_me", _on_die_entered)
 		i.connect("mouse_not_on_me", _on_die_left)
@@ -49,14 +55,16 @@ func _input(event: InputEvent) -> void:
 			var target_index = get_closest_index_to_mouse()
 			if target_index != -1 and target_index != dragged_item.get_index():
 				move_child(dragged_item, target_index)  # Reorder the nodes
-			dragged_item.get_node("Sprite2D").global_position = dragged_item.get_node("Anchor").global_position 
+			dragged_item.get_node("Sprite2D").global_position = dragged_item.get_node("Anchor").global_position
+			if(hover_trash):
+				PlayerResources.money += PlayerResources.round*1.25
+				dragged_item.queue_free()
 			dragged_item = null
 
 func _process(delta: float) -> void:
 	if(Input.is_action_pressed("select")):
 		if dragged_item:
 			dragged_item.get_node("Sprite2D").global_position = get_viewport().get_mouse_position()
-
 
 func get_closest_index_to_mouse() -> int:
 	var mouse_position = get_global_mouse_position()
@@ -77,3 +85,11 @@ func get_closest_index_to_mouse() -> int:
 
 func _on_shop_bought_die(values: Variant, color: Variant) -> void:
 	add_die(values,color)
+
+func _trash_entered():
+	hover_trash = true
+	trash.get_parent().frame = 1
+
+func _trash_left():
+	hover_trash = false
+	trash.get_parent().frame = 0

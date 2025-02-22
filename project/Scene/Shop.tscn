@@ -20,8 +20,8 @@ script = ExtResource("1_111bm")
 layout_mode = 0
 offset_left = -115.0
 offset_top = 64.0
-offset_right = -77.0
-offset_bottom = 95.0
+offset_right = -69.0
+offset_bottom = 94.0
 theme_override_fonts/font = ExtResource("2_6mgxb")
 text = "Buy"
 
@@ -40,17 +40,17 @@ text = "[center]5"
 
 [node name="PotionPanel" parent="Buy0" instance=ExtResource("3_xa1sm")]
 layout_mode = 0
-offset_left = 14.0
-offset_top = -58.0
-offset_right = 22.0
-offset_bottom = -50.0
+offset_left = 10.0
+offset_top = -75.0
+offset_right = 28.0
+offset_bottom = -43.0
 
 [node name="Description" type="RichTextLabel" parent="Buy0"]
 layout_mode = 0
 offset_left = -7.0
 offset_top = 31.0
 offset_right = 58.305
-offset_bottom = 71.0
+offset_bottom = 111.135
 theme_override_fonts/normal_font = ExtResource("2_6mgxb")
 theme_override_font_sizes/bold_italics_font_size = 8
 theme_override_font_sizes/normal_font_size = 8
@@ -83,17 +83,17 @@ text = "[center]5"
 
 [node name="PotionPanel" parent="Buy1" instance=ExtResource("3_xa1sm")]
 layout_mode = 0
-offset_left = 15.0
-offset_top = -58.0
-offset_right = 23.0
-offset_bottom = -50.0
+offset_left = 9.0
+offset_top = -75.0
+offset_right = 27.0
+offset_bottom = -43.0
 
 [node name="Description" type="RichTextLabel" parent="Buy1"]
 layout_mode = 0
 offset_left = -4.0
 offset_top = 31.0
 offset_right = 61.305
-offset_bottom = 71.0
+offset_bottom = 111.0
 theme_override_fonts/normal_font = ExtResource("2_6mgxb")
 theme_override_font_sizes/bold_italics_font_size = 8
 theme_override_font_sizes/normal_font_size = 8

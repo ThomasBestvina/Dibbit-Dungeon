@@ -7,9 +7,7 @@ func init(id: String) -> void:
 	modulate = Lookup.potion_color_lookup(id)
 	text = Lookup.potion_description_lookup(id)
 
-
-
-
 func _on_pressed() -> void:
 	PlayerResources.player.add_potion(myid)
-	get_parent().hide()
+	PlayerResources.items.erase(myid)
+	queue_free()
