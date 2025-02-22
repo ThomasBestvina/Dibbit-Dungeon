@@ -27,13 +27,16 @@ func _process(_delta: float) -> void:
 			can_die = false
 		else:
 			values.append(die.get_current_value())
-			print(values)
 	if(can_die):
 		for die in dice.duplicate():
 			die.queue_free()
 		dice = []
 		emit_signal("die_finished", values)
 
-
+func get_cur_values() -> Array:
+	var values: Array = []
+	for die: RigidBody3D in dice:
+		values.append(die.get_current_value())
+	return values
 func _on_timer_timeout() -> void:
 	can_check = true

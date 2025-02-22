@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c5nl02wkbim7b"]
+[gd_scene load_steps=15 format=3 uid="uid://c5nl02wkbim7b"]
 
 [ext_resource type="Texture2D" uid="uid://ct4bjx3as167m" path="res://Assets/2D/Characters/testEnemy.png" id="1_73ycd"]
 [ext_resource type="Script" path="res://Scripts/Entity.gd" id="2_gfcu3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dby5017p1npas" path="res://Assets/2D/UI/enemySelect.png" id="4_baty3"]
 [ext_resource type="Texture2D" uid="uid://d0pb7eqew6wp8" path="res://Assets/2D/UI/healthBarOver.png" id="4_sopl8"]
 [ext_resource type="Texture2D" uid="uid://qdl1cvmag4ui" path="res://Assets/2D/UI/healthBarProgress.png" id="5_ec0nj"]
+[ext_resource type="FontFile" uid="uid://cxlec2b531som" path="res://Assets/Fonts/Bitmgothic.ttf" id="6_falqk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iud1v"]
 animations = [{
@@ -74,8 +75,10 @@ texture_progress = ExtResource("5_ec0nj")
 
 [node name="HealthText" type="RichTextLabel" parent="."]
 clip_contents = false
+offset_top = 1.0
 offset_right = 64.0
-offset_bottom = 16.0
+offset_bottom = 17.0
+theme_override_fonts/normal_font = ExtResource("6_falqk")
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "[center]9999"

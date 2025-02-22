@@ -1,6 +1,6 @@
 extends Control
 
-@onready var roll_button: Button = $BoxContainer/Roll
+@onready var roll_button: TextureButton = $BoxContainer/Roll
 @onready var items_button: Button = $BoxContainer/Items
 @onready var dice_spawner: spawner = $"SubViewport/DiceRoom"
 
@@ -29,6 +29,12 @@ func _process(delta: float) -> void:
 		if(i.health <= 0):
 			entities.erase(i)
 			i.queue_free()
+	if(len(dice_spawner.dice) > 0):
+		var vals = dice_spawner.get_cur_values()
+		$DiceMath.text = "[center]0"
+		for i in vals:
+			$DiceMath.text += Lookup.lookup_operation(i)
+			$DiceMath.text += str(Lookup.lookup_realval(i))
 
 
 func _on_dice_room_die_finished(values: Array) -> void:
@@ -41,7 +47,10 @@ func _on_dice_room_die_finished(values: Array) -> void:
 		selected.remove_health(damage)
 	else:
 		entities[0].remove_health(damage)
-
+	for i in entities.duplicate():
+		if(i.health <= 0):
+			entities.erase(i)
+			i.queue_free()
 	turn += 1
 	turn = turn % len(entities)
 	handle_turn()
@@ -60,12 +69,13 @@ func spawn_wave():
 		ent.selected.connect(_on_player_selected)
 		entities.append(ent)
 
-func _on_roll_button_down() -> void:
-	dice_spawner.roll_dice([[0,1,2,3,4,5],[1,2,3,4,5,6]], [Color.BLUE,Color.BLACK])
-
 
 func _on_player_selected(node: Entity) -> void:
 	if(selected != null):
 		selected.get_node("Selected").hide()
 	selected = node
 	selected.get_node("Selected").show()
+
+
+func _on_roll_pressed() -> void:
+	dice_spawner.roll_dice([[0,1,2,3,4,5],[9,9,9,9,9,9]], [Color.BLUE,Color.BLACK])

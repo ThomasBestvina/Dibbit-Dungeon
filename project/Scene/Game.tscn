@@ -1,10 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://go68735wem6n"]
+[gd_scene load_steps=21 format=3 uid="uid://go68735wem6n"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
 [ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
 [ext_resource type="PackedScene" uid="uid://c5nl02wkbim7b" path="res://Objects/Entity.tscn" id="3_hkwdk"]
+[ext_resource type="Texture2D" uid="uid://c6t76gqprvfi0" path="res://Assets/2D/UI/buttonRoll.png" id="3_ude7d"]
 [ext_resource type="Texture2D" uid="uid://kpp8n3xjxohj" path="res://Assets/2D/Environment/dungeonWall.png" id="4_np2c7"]
 [ext_resource type="Texture2D" uid="uid://ooy5qvda47f2" path="res://Assets/2D/Characters/PlayerCharacter.png" id="5_bp1ms"]
+[ext_resource type="FontFile" uid="uid://cxlec2b531som" path="res://Assets/Fonts/Bitmgothic.ttf" id="6_naelx"]
+[ext_resource type="PackedScene" uid="uid://b43g85rjlrejp" path="res://Objects/DieRep.tscn" id="8_30frs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -15,6 +18,18 @@ texture = ExtResource("4_np2c7")
 
 [sub_resource type="TileSet" id="TileSet_78p2d"]
 sources/0 = SubResource("TileSetAtlasSource_bdu42")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0qcy"]
+atlas = ExtResource("3_ude7d")
+region = Rect2(0, 0, 127.986, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw1eb"]
+atlas = ExtResource("3_ude7d")
+region = Rect2(255.981, 0, 128.019, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7glbj"]
+atlas = ExtResource("3_ude7d")
+region = Rect2(127.986, 0, 128.168, 32)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_w2k25"]
 viewport_path = NodePath("SubViewport")
@@ -88,10 +103,11 @@ offset_right = 70.0
 grow_vertical = 0
 vertical = true
 
-[node name="Roll" type="Button" parent="BoxContainer"]
+[node name="Roll" type="TextureButton" parent="BoxContainer"]
 layout_mode = 2
-disabled = true
-text = "Roll!"
+texture_normal = SubResource("AtlasTexture_v0qcy")
+texture_pressed = SubResource("AtlasTexture_xw1eb")
+texture_hover = SubResource("AtlasTexture_7glbj")
 
 [node name="Items" type="Button" parent="BoxContainer"]
 layout_mode = 2
@@ -102,12 +118,12 @@ text = "Items"
 [node name="DiceRoom" parent="SubViewport" instance=ExtResource("2_dqqug")]
 
 [node name="Dice Box" type="Sprite2D" parent="."]
-position = Vector2(374, 406)
+position = Vector2(321, 335)
 scale = Vector2(0.095, 0.095)
 texture = SubResource("ViewportTexture_w2k25")
 
 [node name="Players" type="Node2D" parent="."]
-position = Vector2(18, 355)
+position = Vector2(18, 263)
 
 [node name="Player" parent="Players" instance=ExtResource("3_hkwdk")]
 player = true
@@ -119,9 +135,28 @@ sprite_frames = SubResource("SpriteFrames_dx8ww")
 animation = &"idle_combat"
 
 [node name="EnemiesPlacement" type="Node2D" parent="Players"]
-position = Vector2(350, 0)
+position = Vector2(370, 0)
 
-[connection signal="button_down" from="BoxContainer/Roll" to="." method="_on_roll_button_down"]
+[node name="DiceMath" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 289.0
+offset_right = 640.0
+offset_bottom = 329.0
+theme_override_fonts/normal_font = ExtResource("6_naelx")
+bbcode_enabled = true
+text = "[center]0"
+
+[node name="DiceManager" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 7.0
+offset_right = 342.0
+offset_bottom = 47.0
+
+[node name="DieRep" parent="DiceManager" instance=ExtResource("8_30frs")]
+layout_mode = 2
+
+[connection signal="pressed" from="BoxContainer/Roll" to="." method="_on_roll_pressed"]
 [connection signal="die_finished" from="SubViewport/DiceRoom" to="." method="_on_dice_room_die_finished"]
 [connection signal="selected" from="Players/Player" to="." method="_on_player_selected"]
 

@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://b43g85rjlrejp"]
+
+[ext_resource type="Texture2D" uid="uid://b4qhj8xl35la6" path="res://Assets/2D/DiceFaces/DiceFacesSheet.png" id="1_0c0qw"]
+[ext_resource type="Script" path="res://Scripts/DieRep.gd" id="1_7p1ju"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjrdi"]
+atlas = ExtResource("1_0c0qw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk4ho"]
+atlas = ExtResource("1_0c0qw")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8xq5"]
+atlas = ExtResource("1_0c0qw")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmq71"]
+atlas = ExtResource("1_0c0qw")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0osq"]
+atlas = ExtResource("1_0c0qw")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pg7y"]
+atlas = ExtResource("1_0c0qw")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s1tx"]
+atlas = ExtResource("1_0c0qw")
+region = Rect2(0, 192, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_155sm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjrdi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hk4ho")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8xq5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmq71")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0osq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pg7y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s1tx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="DieRep" type="Container"]
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_7p1ju")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(16, 16)
+sprite_frames = SubResource("SpriteFrames_155sm")
+frame = 6
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

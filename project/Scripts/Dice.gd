@@ -1,5 +1,6 @@
 extends RigidBody3D
 
+
 @export var random_fling_force: float = 50
 
 var sides
