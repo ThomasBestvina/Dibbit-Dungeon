@@ -1,8 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://b51iigyvgwb8e"]
+[gd_scene load_steps=11 format=3 uid="uid://b51iigyvgwb8e"]
 
 [ext_resource type="Script" path="res://Scripts/DiceSpawner.gd" id="1_nrmtl"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_j4i3r"]
+size = Vector3(1, 1, 2.15735)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xi37f"]
+size = Vector3(1, 1, 2.4389)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_hh4ic"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gaemq"]
+size = Vector3(2.66479, 1, 2.54272)
 
 [sub_resource type="Gradient" id="Gradient_tsb7b"]
 offsets = PackedFloat32Array(0, 0.0555556, 1)
@@ -31,13 +40,15 @@ transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0.485208, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_hh4ic")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0155639)
+shape = SubResource("BoxShape3D_j4i3r")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D2"]
-shape = SubResource("BoxShape3D_hh4ic")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0870667)
+shape = SubResource("BoxShape3D_xi37f")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
@@ -55,7 +66,8 @@ shape = SubResource("BoxShape3D_hh4ic")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D6"]
-shape = SubResource("BoxShape3D_hh4ic")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0858154, 0, 0.0101318)
+shape = SubResource("BoxShape3D_gaemq")
 
 [node name="StaticBody3D5" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
@@ -77,5 +89,6 @@ transform = Transform3D(1, 0, 0, 0, -0.165323, 0.98624, 0, -0.98624, -0.165323, 
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
+one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5nl02wkbim7b"]
+[gd_scene load_steps=14 format=3 uid="uid://c5nl02wkbim7b"]
 
 [ext_resource type="Texture2D" uid="uid://ct4bjx3as167m" path="res://Assets/2D/Characters/testEnemy.png" id="1_73ycd"]
-[ext_resource type="Texture2D" uid="uid://dqvyg6uj7xt8j" path="res://icon.svg" id="1_jcxgj"]
 [ext_resource type="Script" path="res://Scripts/Entity.gd" id="2_gfcu3"]
+[ext_resource type="Texture2D" uid="uid://do34su6cairg4" path="res://Assets/2D/UI/healthBarUnder.png" id="3_3jbbq"]
 [ext_resource type="Texture2D" uid="uid://dby5017p1npas" path="res://Assets/2D/UI/enemySelect.png" id="4_baty3"]
+[ext_resource type="Texture2D" uid="uid://d0pb7eqew6wp8" path="res://Assets/2D/UI/healthBarOver.png" id="4_sopl8"]
+[ext_resource type="Texture2D" uid="uid://qdl1cvmag4ui" path="res://Assets/2D/UI/healthBarProgress.png" id="5_ec0nj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iud1v"]
 animations = [{
@@ -53,36 +55,45 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lxgmg"]
-size = Vector2(30, 36)
+size = Vector2(53.7696, 35.6891)
 
-[node name="Entity" type="AnimatedSprite2D"]
-sprite_frames = SubResource("SpriteFrames_iud1v")
+[node name="Node2D" type="Node2D"]
 script = ExtResource("2_gfcu3")
 
+[node name="Entity" type="AnimatedSprite2D" parent="."]
+position = Vector2(33, -16)
+sprite_frames = SubResource("SpriteFrames_iud1v")
+
 [node name="HealthBar" type="TextureProgressBar" parent="."]
-visible = false
-offset_left = -55.0
-offset_top = 23.0
-offset_right = 73.0
-offset_bottom = 151.0
-texture_progress = ExtResource("1_jcxgj")
+offset_right = 64.0
+offset_bottom = 16.0
+value = 2.0
+texture_under = ExtResource("3_3jbbq")
+texture_over = ExtResource("4_sopl8")
+texture_progress = ExtResource("5_ec0nj")
 
 [node name="HealthText" type="RichTextLabel" parent="."]
-offset_left = -8.0
-offset_top = 19.0
-offset_right = 32.0
-offset_bottom = 59.0
-text = "20"
+clip_contents = false
+offset_right = 64.0
+offset_bottom = 16.0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]9999"
+fit_content = true
+scroll_active = false
 autowrap_mode = 0
 
 [node name="Selected" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2(-1, 2)
+position = Vector2(32, -15)
 sprite_frames = SubResource("SpriteFrames_elygk")
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(32, -15)
+scale = Vector2(0.818306, 0.84798)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-2.44407, 0.155449)
 shape = SubResource("RectangleShape2D_lxgmg")
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

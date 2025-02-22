@@ -104,21 +104,20 @@ animations = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ep7qj"]
-size = Vector3(0.2, 0.2, 0.2)
+size = Vector3(0.3, 0.3, 0.3)
 
 [node name="Die" type="RigidBody3D"]
 mass = 0.3
 physics_material_override = SubResource("PhysicsMaterial_fxeaq")
 script = ExtResource("1_yptd6")
-random_fling_force = 25.0
 
 [node name="Cube" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.102, 0, 0, 0, 0.102, 0, 0, 0, 0.102, 0, 0, 0)
+transform = Transform3D(0.153, 0, 0, 0, 0.153, 0, 0, 0, 0.153, 0, 0, 0)
 mesh = SubResource("ArrayMesh_781hy")
 skeleton = NodePath("")
 
 [node name="Faces" type="Node3D" parent="."]
-transform = Transform3D(2.01, 0, 0, 0, 2.01, 0, 0, 0, 2.01, 0, 0, 0)
+transform = Transform3D(3.015, 0, 0, 0, 3.015, 0, 0, 0, 3.015, 0, 0, 0)
 
 [node name="0" type="AnimatedSprite3D" parent="Faces"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0.051)

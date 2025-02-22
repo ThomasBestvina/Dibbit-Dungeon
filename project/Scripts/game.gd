@@ -3,37 +3,76 @@ extends Control
 @onready var roll_button: Button = $BoxContainer/Roll
 @onready var retreat_button: Button = $BoxContainer/Retreat
 @onready var items_button: Button = $BoxContainer/Items
-
 @onready var dice_spawner: spawner = $"SubViewport/DiceRoom"
+
+@onready var ent_preload = preload("res://Objects/Entity.tscn")
 
 var die = []
 
 var entities: Array[Entity] = []
 
-var budget = 1
+var budget = 3
 
+# Turn 0 means players turn.
 var turn = 0
 
 var selected: Entity = null
 
 func _ready() -> void:
 	entities.append($Players/Player)
+	spawn_wave()
+	_on_dice_room_die_finished([])
 
 func _process(delta: float) -> void:
-	pass
+	if(turn != 0 || ( turn == 0 && selected == null ) ):
+		roll_button.disabled = true
+	else:
+		roll_button.disabled = false
+	if(turn == 0):
+		retreat_button.disabled = false
+	else:
+		retreat_button.disabled = true
+	for i in entities.duplicate():
+		if(i.health <= 0):
+			entities.erase(i)
+			i.queue_free()
 
 
 func _on_dice_room_die_finished(values: Array) -> void:
-	print(values)
+	if(len(values) == 0): return
+	
+	var damage: int = 0
+	for i in values:
+		damage = Lookup.calculate(damage, i)
+	if(turn == 0):
+		selected.remove_health(damage)
+	else:
+		entities[0].remove_health(damage)
 
+	turn += 1
+	turn = turn % len(entities)
+	handle_turn()
 
-func spawn_wave()
+func handle_turn():
+	if turn == 0: return
+	dice_spawner.roll_dice(entities[turn].dice_values, entities[turn].dice_color_values)
+
+func spawn_wave():
+	for i in budget:
+		var ent: Entity = ent_preload.instantiate()
+		ent.dice_values = [[0,1,2,3,4,5],[2,2,3,4,5,6]]
+		ent.dice_color_values = [Color.RED, Color.BLACK]
+		$Players/EnemiesPlacement.add_child(ent)
+		ent.global_position.x += 75*i
+		ent.selected.connect(_on_player_selected)
+		entities.append(ent)
 
 func _on_roll_button_down() -> void:
 	dice_spawner.roll_dice([[0,1,2,3,4,5],[1,2,3,4,5,6]], [Color.BLUE,Color.BLACK])
 
 
 func _on_player_selected(node: Entity) -> void:
-	selected.get_node("Selected").hide()
+	if(selected != null):
+		selected.get_node("Selected").hide()
 	selected = node
 	selected.get_node("Selected").show()

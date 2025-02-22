@@ -27,11 +27,12 @@ func _process(_delta: float) -> void:
 			can_die = false
 		else:
 			values.append(die.get_current_value())
+			print(values)
 	if(can_die):
-		emit_signal("die_finished", values)
 		for die in dice.duplicate():
 			die.queue_free()
 		dice = []
+		emit_signal("die_finished", values)
 
 
 func _on_timer_timeout() -> void:

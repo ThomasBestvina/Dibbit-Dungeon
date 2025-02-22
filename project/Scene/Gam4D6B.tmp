@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://go68735wem6n"]
+
+[ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
+[ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
+[ext_resource type="PackedScene" uid="uid://c5nl02wkbim7b" path="res://Objects/Entity.tscn" id="3_hkwdk"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_w2k25"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -108.755
+grow_vertical = 0
+script = ExtResource("1_gblby")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -101.0
+offset_right = 70.0
+grow_vertical = 0
+vertical = true
+
+[node name="Roll" type="Button" parent="BoxContainer"]
+layout_mode = 2
+text = "Roll!"
+
+[node name="Retreat" type="Button" parent="BoxContainer"]
+layout_mode = 2
+text = "Retreat!"
+
+[node name="Items" type="Button" parent="BoxContainer"]
+layout_mode = 2
+text = "Items"
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="DiceRoom" parent="SubViewport" instance=ExtResource("2_dqqug")]
+
+[node name="Dice Box" type="Sprite2D" parent="."]
+position = Vector2(566, 41.755)
+scale = Vector2(0.26, 0.26)
+texture = SubResource("ViewportTexture_w2k25")
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("3_hkwdk")]
+offset_left = 176.0
+offset_top = -101.245
+offset_right = 240.0
+offset_bottom = -85.245
+player = true
+
+[node name="BoxContainer" type="BoxContainer" parent="Players"]
+offset_left = 427.0
+offset_top = -121.245
+offset_right = 467.0
+offset_bottom = -81.245
+
+[node name="Node2D" parent="Players/BoxContainer" instance=ExtResource("3_hkwdk")]
+layout_mode = 2
+
+[node name="Node2D2" parent="Players/BoxContainer" instance=ExtResource("3_hkwdk")]
+layout_mode = 2
+
+[connection signal="button_down" from="BoxContainer/Roll" to="." method="_on_roll_button_down"]
+[connection signal="die_finished" from="SubViewport/DiceRoom" to="." method="_on_dice_room_die_finished"]
+[connection signal="selected" from="Players/Player" to="." method="_on_player_selected"]

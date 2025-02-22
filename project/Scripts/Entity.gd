@@ -16,12 +16,12 @@ signal selected(node: Entity)
 
 func _ready() -> void:
 	$Selected.play()
-	$HealthText.text = str(health)
+	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
 
 func remove_health(val: int):
 	health -= val
-	$HealthText.text = str(health)
+	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
 
 
