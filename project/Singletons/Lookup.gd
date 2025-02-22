@@ -29,6 +29,34 @@ func lookup_realval(val: int) -> float:
 	return 0
 
 
+func potion_color_lookup(id: String) -> Color:
+	match id:
+		"heal":
+			return Color.GREEN
+		"healroll":
+			return Color.FOREST_GREEN
+		"modroll":
+			return Color.RED
+		"defend":
+			return Color.DARK_GOLDENROD
+		"reroll":
+			return Color.BLUE_VIOLET
+	return Color.WHITE
+
+func potion_description_lookup(id: String) -> String:
+	match id:
+		"heal":
+			return "Heals for 25% of your health."
+		"healroll":
+			return "Heals for 10% of the damage you deal."
+		"modroll":
+			return "Increases the amount of damage dealt by 50%"
+		"defend":
+			return "Decreases the amount of damage you take by 50%"
+		"reroll":
+			return "Rolls twice, keeps higher value."
+	return ""
+
 func calculate(cur_num: int, val: int):
 	if val == 7:
 		return cur_num*(1.5)

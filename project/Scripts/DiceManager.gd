@@ -9,7 +9,7 @@ func _ready() -> void:
 	for i: DiceRep in get_children():
 		i.connect("mouse_on_me", _on_die_entered)
 		i.connect("mouse_not_on_me", _on_die_left)
-	for i in range(50):
+	for i in range(2):
 		var die = Lookup.generate_die()
 		add_die(die[0],die[1])
 

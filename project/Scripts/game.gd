@@ -1,11 +1,12 @@
 extends Control
 
 @onready var roll_button: TextureButton = $BoxContainer/Roll
-@onready var items_button: Button = $BoxContainer/Items
+@onready var items_button: TextureButton = $BoxContainer/Items
 @onready var dice_spawner: spawner = $"SubViewport/DiceRoom"
 
 @onready var ent_preload = preload("res://Objects/Entity.tscn")
 @onready var enemies_node = $Players/EnemiesPlacement
+@onready var potion_button_preload = preload("res://Objects/PotionButton.tscn")
 
 var entities: Array[Entity] = []
 
@@ -52,7 +53,7 @@ func _process(delta: float) -> void:
 		rooms_picked = true
 
 func pick_rooms():
-	
+	if()
 	# Pick from 3 rooms, campfire, shop, combat.
 	# Only 1 and shop can be selected, any number of combats (well really 2)
 	# Lets say 1/3 campfire, 2/5 shop, rest combat.
@@ -196,9 +197,26 @@ func manage_room_change(room: String):
 			spawn_wave()
 	rooms_picked = false
 
+
 func _on_left_door_pressed() -> void:
 	manage_room_change($Doors/LeftDoor.text)
 
 
 func _on_right_door_pressed() -> void:
 	manage_room_change($Doors/RightDoor.text)
+
+
+func _on_texture_button_pressed() -> void:
+	for i in $PotionList.get_children():
+		queue_free()
+	for i in PlayerResources.items:
+		var but = potion_button_preload.instantiate()
+		but.init(i)
+		$PotionList.add_child(but)
+	$PotionList.show()
+	$PotionCancel.show()
+
+
+func _on_potion_cancel_pressed() -> void:
+	$PotionList.hide()
+	$PotionCancel.hide()

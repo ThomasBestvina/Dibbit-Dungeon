@@ -23,14 +23,36 @@ func generate_shop():
 	$Buy3/DieRep.show()
 	$Buy3/Cost.text = "[center]" + str(die_cost)
 	
+	var potion_cost = int((1+PlayerResources.round)*1.2)
+	var potion1 = get_random_potion()
+	var potion2 = get_random_potion()
+	
+	$Buy0/Cost.text = "[center]" + str(potion_cost)
+	$Buy1/Cost.text = "[center]" + str(potion_cost)
+	
+	$Buy1/PotionPanel/Sprite2D.modulate = Lookup.potion_color_lookup(potion1)
+	$Buy0/PotionPanel/Sprite2D.modulate = Lookup.potion_color_lookup(potion2)
+	
+	$Buy1/Description.text = Lookup.potion_description_lookup(potion1)
+	$Buy0/Description.text = Lookup.potion_description_lookup(potion2)
 
+func get_random_potion():
+	var lst = ["heal","healroll","modroll","defend","reroll"]
+	return lst[randi() % len(lst)]
 
 func _on_buy_0_pressed() -> void:
-	pass # Replace with function body.
+	if(PlayerResources.money >= die_cost && $Buy0/PotionPanel.visible):
+		PlayerResources.money -= die_cost
+		PlayerResources.items.append($Buy0/PotionPanel.id)
+		$Buy2/DieRep.hide()
+
 
 
 func _on_buy_1_pressed() -> void:
-	pass # Replace with function body.
+	if(PlayerResources.money >= die_cost && $Buy0/PotionPanel.visible):
+		PlayerResources.money -= die_cost
+		PlayerResources.items.append($Buy0/PotionPanel.id)
+		$Buy2/DieRep.hide()
 
 
 func _on_buy_2_pressed() -> void:
