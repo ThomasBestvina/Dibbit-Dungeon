@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://go68735wem6n"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_gblby"]
+[ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_w2k25"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -108.755
+grow_vertical = 0
+script = ExtResource("1_gblby")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -101.0
+offset_right = 70.0
+grow_vertical = 0
+vertical = true
+
+[node name="Roll" type="Button" parent="BoxContainer"]
+layout_mode = 2
+text = "Roll!"
+
+[node name="Retreat" type="Button" parent="BoxContainer"]
+layout_mode = 2
+text = "Retreat!"
+
+[node name="Items" type="Button" parent="BoxContainer"]
+layout_mode = 2
+text = "Items"
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Dice Room" parent="SubViewport" instance=ExtResource("2_dqqug")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(789, -36.245)
+scale = Vector2(0.55, 0.55)
+texture = SubResource("ViewportTexture_w2k25")

@@ -1,0 +1,108 @@
+[gd_scene load_steps=13 format=3 uid="uid://bk3ricuscwxhi"]
+
+[ext_resource type="Texture2D" uid="uid://cufy878eflbaw" path="res://Assets/2D/DiceFacesSheet.png" id="1_3wext"]
+[ext_resource type="Script" path="res://Objects/Dice.gd" id="1_yptd6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ep7qj"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5i2t"]
+atlas = ExtResource("1_3wext")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_intr0"]
+atlas = ExtResource("1_3wext")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mnei"]
+atlas = ExtResource("1_3wext")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfuc2"]
+atlas = ExtResource("1_3wext")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmx3r"]
+atlas = ExtResource("1_3wext")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ra4sq"]
+atlas = ExtResource("1_3wext")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csosd"]
+atlas = ExtResource("1_3wext")
+region = Rect2(0, 192, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dy6t6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5i2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_intr0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mnei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfuc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmx3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ra4sq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csosd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="BoxMesh" id="BoxMesh_70jdw"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="Die" type="RigidBody3D"]
+script = ExtResource("1_yptd6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ep7qj")
+
+[node name="Faces" type="Node3D" parent="."]
+
+[node name="0" type="AnimatedSprite3D" parent="Faces"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0.051)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_dy6t6")
+
+[node name="1" type="AnimatedSprite3D" parent="Faces"]
+transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, 0, -0.051)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_dy6t6")
+
+[node name="2" type="AnimatedSprite3D" parent="Faces"]
+transform = Transform3D(-1.31134e-08, 0.3, -1.31134e-08, 0, -1.31134e-08, -0.3, -0.3, -1.31134e-08, 5.73206e-16, 0, 0.051, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_dy6t6")
+
+[node name="3" type="AnimatedSprite3D" parent="Faces"]
+transform = Transform3D(-1.31134e-08, -0.3, -1.31134e-08, 0, -1.31134e-08, 0.3, -0.3, 1.31134e-08, 5.73206e-16, 0, -0.051, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_dy6t6")
+
+[node name="4" type="AnimatedSprite3D" parent="Faces"]
+transform = Transform3D(-1.31134e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.31134e-08, 0.051, 0, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_dy6t6")
+
+[node name="5" type="AnimatedSprite3D" parent="Faces"]
+transform = Transform3D(5.73206e-16, 1.31134e-08, 0.3, 0.3, -1.31134e-08, 0, 1.31134e-08, 0.3, -1.31134e-08, -0.051, 0, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_dy6t6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_70jdw")
