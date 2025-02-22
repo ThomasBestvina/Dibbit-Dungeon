@@ -1,17 +1,14 @@
 extends Control
 
 @onready var roll_button: Button = $BoxContainer/Roll
-@onready var retreat_button: Button = $BoxContainer/Retreat
 @onready var items_button: Button = $BoxContainer/Items
 @onready var dice_spawner: spawner = $"SubViewport/DiceRoom"
 
 @onready var ent_preload = preload("res://Objects/Entity.tscn")
 
-var die = []
-
 var entities: Array[Entity] = []
 
-var budget = 3
+var budget = 2
 
 # Turn 0 means players turn.
 var turn = 0
@@ -28,10 +25,6 @@ func _process(delta: float) -> void:
 		roll_button.disabled = true
 	else:
 		roll_button.disabled = false
-	if(turn == 0):
-		retreat_button.disabled = false
-	else:
-		retreat_button.disabled = true
 	for i in entities.duplicate():
 		if(i.health <= 0):
 			entities.erase(i)
