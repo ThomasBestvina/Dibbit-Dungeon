@@ -52,11 +52,6 @@ texture = SubResource("ViewportTexture_w2k25")
 [node name="Player" type="Node2D" parent="Players"]
 script = ExtResource("3_6wof2")
 
-[node name="BoxContainer" type="BoxContainer" parent="Players"]
-offset_left = 795.0
-offset_top = -66.245
-offset_right = 835.0
-offset_bottom = -26.245
-
 [connection signal="button_down" from="BoxContainer/Roll" to="." method="_on_roll_button_down"]
 [connection signal="die_finished" from="SubViewport/DiceRoom" to="." method="_on_dice_room_die_finished"]
+[connection signal="selected" from="Players/Player" to="." method="_on_player_selected"]
