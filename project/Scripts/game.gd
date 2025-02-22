@@ -10,6 +10,10 @@ var die = []
 
 var entities: Array[Entity] = []
 
+var budget = 1
+
+var turn = 0
+
 var selected: Entity = null
 
 func _ready() -> void:
@@ -23,9 +27,13 @@ func _on_dice_room_die_finished(values: Array) -> void:
 	print(values)
 
 
+func spawn_wave()
+
 func _on_roll_button_down() -> void:
 	dice_spawner.roll_dice([[0,1,2,3,4,5],[1,2,3,4,5,6]], [Color.BLUE,Color.BLACK])
 
 
 func _on_player_selected(node: Entity) -> void:
-	pass # Replace with function body.
+	selected.get_node("Selected").hide()
+	selected = node
+	selected.get_node("Selected").show()

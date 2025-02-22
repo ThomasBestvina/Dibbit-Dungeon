@@ -1,45 +1,88 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5nl02wkbim7b"]
+[gd_scene load_steps=12 format=3 uid="uid://c5nl02wkbim7b"]
 
+[ext_resource type="Texture2D" uid="uid://ct4bjx3as167m" path="res://Assets/2D/Characters/testEnemy.png" id="1_73ycd"]
 [ext_resource type="Texture2D" uid="uid://dqvyg6uj7xt8j" path="res://icon.svg" id="1_jcxgj"]
 [ext_resource type="Script" path="res://Scripts/Entity.gd" id="2_gfcu3"]
+[ext_resource type="Texture2D" uid="uid://dby5017p1npas" path="res://Assets/2D/UI/enemySelect.png" id="4_baty3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iud1v"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_jcxgj")
+"texture": ExtResource("1_73ycd")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5sj0q"]
-size = Vector2(128, 261)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ibq0"]
+atlas = ExtResource("4_baty3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5g50e"]
+atlas = ExtResource("4_baty3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wve5"]
+atlas = ExtResource("4_baty3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpbn3"]
+atlas = ExtResource("4_baty3")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_elygk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ibq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5g50e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wve5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpbn3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxgmg"]
+size = Vector2(30, 36)
 
 [node name="Entity" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_iud1v")
 script = ExtResource("2_gfcu3")
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -64.0
-offset_top = 80.0
-offset_right = 64.0
-offset_bottom = 208.0
+visible = false
+offset_left = -55.0
+offset_top = 23.0
+offset_right = 73.0
+offset_bottom = 151.0
 texture_progress = ExtResource("1_jcxgj")
 
 [node name="HealthText" type="RichTextLabel" parent="."]
-offset_left = -20.0
-offset_top = 75.0
-offset_right = 20.0
-offset_bottom = 115.0
+offset_left = -8.0
+offset_top = 19.0
+offset_right = 32.0
+offset_bottom = 59.0
 text = "20"
 autowrap_mode = 0
+
+[node name="Selected" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-1, 2)
+sprite_frames = SubResource("SpriteFrames_elygk")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, -61.5)
-shape = SubResource("RectangleShape2D_5sj0q")
+shape = SubResource("RectangleShape2D_lxgmg")
 
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

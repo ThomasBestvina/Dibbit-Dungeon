@@ -15,14 +15,17 @@ signal selected(node: Entity)
 @export var items: Array = []
 
 func _ready() -> void:
-	$HealthText.text = health
-	$HealthBar.value = health/max_health*100
+	$Selected.play()
+	$HealthText.text = str(health)
+	$HealthBar.value = float(health)/max_health*100
 
 func remove_health(val: int):
 	health -= val
-	$HealthText.text = health
-	$HealthBar.value = health/max_health*100
+	$HealthText.text = str(health)
+	$HealthBar.value = float(health)/max_health*100
 
-func _on_area_2d_mouse_entered() -> void:
-	if(!player): return
-	emit_signal("selected",self)
+
+func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton && !player:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			emit_signal("selected",self)
