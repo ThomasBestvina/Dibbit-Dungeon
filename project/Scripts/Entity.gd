@@ -23,6 +23,7 @@ func _ready() -> void:
 
 func remove_health(val: int):
 	health -= val
+	health = min(max_health, health)
 	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
 

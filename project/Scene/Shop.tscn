@@ -1,0 +1,130 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceq8618ebypjv"]
+
+[ext_resource type="Script" path="res://Scripts/shop.gd" id="1_111bm"]
+[ext_resource type="Texture2D" uid="uid://di2agpyb6tl8h" path="res://Assets/2D/Environment/pedestal.png" id="2_i15di"]
+[ext_resource type="PackedScene" uid="uid://b43g85rjlrejp" path="res://Objects/DieRep.tscn" id="3_imhv7"]
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_111bm")
+
+[node name="Buy0" type="Button" parent="."]
+layout_mode = 0
+offset_left = -115.0
+offset_top = 64.0
+offset_right = -77.0
+offset_bottom = 95.0
+text = "Buy"
+
+[node name="0" type="Sprite2D" parent="Buy0"]
+position = Vector2(19, -32)
+texture = ExtResource("2_i15di")
+
+[node name="Cost" type="RichTextLabel" parent="Buy0"]
+layout_mode = 0
+offset_top = -26.0
+offset_right = 40.0
+offset_bottom = 14.0
+bbcode_enabled = true
+text = "[center]5"
+
+[node name="Buy1" type="Button" parent="."]
+layout_mode = 0
+offset_left = -50.0
+offset_top = 64.0
+offset_right = -12.0
+offset_bottom = 95.0
+text = "Buy"
+
+[node name="Pedestal" type="Sprite2D" parent="Buy1"]
+position = Vector2(18, -32)
+texture = ExtResource("2_i15di")
+
+[node name="Cost" type="RichTextLabel" parent="Buy1"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -25.0
+offset_right = 39.0
+offset_bottom = 15.0
+bbcode_enabled = true
+text = "[center]5"
+
+[node name="Buy2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 64.0
+offset_right = 51.0
+offset_bottom = 95.0
+text = "Buy"
+
+[node name="Pedestal2" type="Sprite2D" parent="Buy2"]
+position = Vector2(19, -32)
+texture = ExtResource("2_i15di")
+
+[node name="Cost" type="RichTextLabel" parent="Buy2"]
+layout_mode = 0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 16.0
+bbcode_enabled = true
+text = "[center]5"
+
+[node name="DieRep" parent="Buy2" instance=ExtResource("3_imhv7")]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -83.0
+offset_right = 35.0
+offset_bottom = -51.0
+
+[node name="RichTextLabel" parent="Buy2/DieRep/Sprite2D" index="1"]
+offset_left = 16.0
+offset_top = 2.0
+offset_right = 48.0
+offset_bottom = 142.0
+
+[node name="Buy3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 64.0
+offset_right = 116.0
+offset_bottom = 95.0
+text = "Buy"
+
+[node name="Pedestal3" type="Sprite2D" parent="Buy3"]
+position = Vector2(18, -32)
+texture = ExtResource("2_i15di")
+
+[node name="Cost" type="RichTextLabel" parent="Buy3"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -24.0
+offset_right = 39.0
+offset_bottom = 16.0
+bbcode_enabled = true
+text = "[center]5"
+
+[node name="DieRep" parent="Buy3" instance=ExtResource("3_imhv7")]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -82.0
+offset_right = 34.0
+offset_bottom = -50.0
+
+[node name="RichTextLabel" parent="Buy3/DieRep/Sprite2D" index="1"]
+offset_left = 16.0
+offset_top = 2.0
+offset_right = 48.0
+offset_bottom = 142.0
+
+[connection signal="pressed" from="Buy0" to="." method="_on_buy_0_pressed"]
+[connection signal="pressed" from="Buy1" to="." method="_on_buy_1_pressed"]
+[connection signal="pressed" from="Buy2" to="." method="_on_buy_2_pressed"]
+[connection signal="pressed" from="Buy3" to="." method="_on_buy_3_pressed"]
+
+[editable path="Buy2/DieRep"]
+[editable path="Buy3/DieRep"]

@@ -17,13 +17,17 @@ func roll_dice(list_of_die, list_of_die_color):
 		dice.append(die)
 		can_check = false
 		$Timer.start(3)
+		$Backup.start(8)
 
 func _process(_delta: float) -> void:
 	if(len(dice) == 0 || !can_check): return
 	var can_die: bool = true
 	var values = []
+	var max_velo = 0
 	for die: RigidBody3D in dice:
-		if(die.linear_velocity.length() > 0.05):
+		if(die.linear_velocity.length() > max_velo):
+			max_velo = die.linear_velocity.length()
+		if(die.linear_velocity.length() > 0.1):
 			can_die = false
 		else:
 			values.append(die.get_current_value())
@@ -40,3 +44,16 @@ func get_cur_values() -> Array:
 	return values
 func _on_timer_timeout() -> void:
 	can_check = true
+
+
+func _on_backup_timeout() -> void:
+	if(len(dice) == 0 || !can_check): return
+	var can_die: bool = true
+	var values = []
+	for die: RigidBody3D in dice:
+		values.append(die.get_current_value())
+	if(can_die):
+		for die in dice.duplicate():
+			die.queue_free()
+		dice = []
+		emit_signal("die_finished", values)

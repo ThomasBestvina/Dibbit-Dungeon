@@ -1,8 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://b43g85rjlrejp"]
+[gd_scene load_steps=31 format=3 uid="uid://b43g85rjlrejp"]
 
 [ext_resource type="Texture2D" uid="uid://b4qhj8xl35la6" path="res://Assets/2D/DiceFaces/DiceFacesSheet.png" id="1_0c0qw"]
 [ext_resource type="Script" path="res://Scripts/DieRep.gd" id="1_7p1ju"]
 [ext_resource type="Texture2D" uid="uid://clhveau2tue0a" path="res://Assets/2D/DiceFaces/Face.png" id="2_0sgud"]
+[ext_resource type="FontFile" uid="uid://cxlec2b531som" path="res://Assets/Fonts/Bitmgothic.ttf" id="4_7vahd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mtxm3"]
 atlas = ExtResource("1_0c0qw")
@@ -201,6 +202,23 @@ texture = ExtResource("2_0sgud")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprite2D"]
 sprite_frames = SubResource("SpriteFrames_155sm")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Sprite2D"]
+visible = false
+offset_left = -16.0
+offset_top = 18.0
+offset_right = 16.0
+offset_bottom = 158.0
+theme_override_fonts/normal_font = ExtResource("4_7vahd")
+bbcode_enabled = true
+text = "hfg
+e
+f
+g
+h
+j
+ik
+"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.26

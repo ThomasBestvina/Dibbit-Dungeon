@@ -1,4 +1,6 @@
-extends HBoxContainer
+extends HFlowContainer
+
+@onready var dierep = preload("res://Objects/DieRep.tscn")
 
 var dragged_item: Panel = null
 
@@ -7,6 +9,17 @@ func _ready() -> void:
 	for i: DiceRep in get_children():
 		i.connect("mouse_on_me", _on_die_entered)
 		i.connect("mouse_not_on_me", _on_die_left)
+	for i in range(50):
+		var die = Lookup.generate_die()
+		add_die(die[0],die[1])
+
+func add_die(value,col):
+	var die = dierep.instantiate()
+	die.connect("mouse_on_me", _on_die_entered)
+	die.connect("mouse_not_on_me", _on_die_left)
+	die.values = value
+	die.color = col
+	add_child(die)
 
 func get_player_die_values() -> Array:
 	var values = []
@@ -60,3 +73,7 @@ func get_closest_index_to_mouse() -> int:
 			closest_index = i
 			
 	return closest_index
+
+
+func _on_shop_bought_die(values: Variant, color: Variant) -> void:
+	add_die(values,color)
