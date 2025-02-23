@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://menu.gd" id="1_6pvpn"]
 [ext_resource type="Texture2D" uid="uid://wv8o1qwlhp6g" path="res://Assets/2D/UI/buttonPlay.png" id="2_3f1jx"]
+[ext_resource type="Texture2D" uid="uid://btmu7x1ogq8jd" path="res://Assets/2D/Main Menu/UJamBG.png" id="2_wkvxx"]
 [ext_resource type="Texture2D" uid="uid://bbbg8yqus7p63" path="res://Assets/2D/UI/buttonQuit.png" id="3_qplqh"]
 [ext_resource type="Script" path="res://Scripts/sfx_control.gd" id="4_y3ml4"]
 [ext_resource type="Texture2D" uid="uid://bid54depe5fuw" path="res://Assets/2D/UI/buttonSFX.png" id="5_t83sp"]
@@ -54,8 +55,6 @@ region = Rect2(127.992, 0, 64.0076, 32)
 atlas = ExtResource("3_qplqh")
 region = Rect2(64.0056, 0, 64.017, 32)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_1dwwr"]
-
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -64,6 +63,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6pvpn")
+
+[node name="UJamBg" type="Sprite2D" parent="."]
+position = Vector2(320, 180)
+texture = ExtResource("2_wkvxx")
 
 [node name="VSplitContainer" type="VSplitContainer" parent="."]
 layout_mode = 1
@@ -114,14 +117,6 @@ texture_normal = SubResource("AtlasTexture_c28se")
 texture_pressed = SubResource("AtlasTexture_ay3nb")
 texture_hover = SubResource("AtlasTexture_hu4bq")
 
-[node name="PhysicsEngineStarter" type="RigidBody3D" parent="."]
-
-[node name="Timer" type="Timer" parent="PhysicsEngineStarter"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsEngineStarter"]
-shape = SubResource("SphereShape3D_1dwwr")
-
 [connection signal="pressed" from="VSplitContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="SFXControl/On" to="SFXControl" method="_on_on_pressed"]
 [connection signal="pressed" from="SFXControl/Off" to="SFXControl" method="_on_off_pressed"]
-[connection signal="timeout" from="PhysicsEngineStarter/Timer" to="." method="_on_timer_timeout"]

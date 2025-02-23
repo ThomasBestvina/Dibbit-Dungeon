@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://go68735wem6n"]
+[gd_scene load_steps=106 format=3 uid="uid://go68735wem6n"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
 [ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
@@ -24,6 +24,12 @@
 [ext_resource type="AudioStream" uid="uid://ck85f4oggoqmy" path="res://Assets/Sound/select.wav" id="21_4jbk1"]
 [ext_resource type="AudioStream" uid="uid://bqjuox6ru6yk5" path="res://Assets/Sound/trashitem.wav" id="22_3oudr"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="23_48sfk"]
+[ext_resource type="Texture2D" uid="uid://cb0b58se7gvl2" path="res://Assets/2D/UI/deathScreen.png" id="25_f3we6"]
+[ext_resource type="Texture2D" uid="uid://phewnqg20fab" path="res://Assets/2D/UI/buttonPlayAgain.png" id="26_bj7b7"]
+[ext_resource type="Script" path="res://Scripts/death_screen.gd" id="26_iuxpr"]
+[ext_resource type="Texture2D" uid="uid://c635v2yo5067x" path="res://Assets/2D/UI/buttonMainMenu.png" id="27_epldr"]
+[ext_resource type="Texture2D" uid="uid://bbbg8yqus7p63" path="res://Assets/2D/UI/buttonQuit.png" id="27_ig0qn"]
+[ext_resource type="PackedScene" uid="uid://dp74vcgfh4d35" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -184,6 +190,10 @@ region = Rect2(96, 192, 32, 32)
 atlas = ExtResource("5_bp1ms")
 region = Rect2(128, 192, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkfg8"]
+atlas = ExtResource("5_bp1ms")
+region = Rect2(0, 128, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0gnh6"]
 atlas = ExtResource("5_bp1ms")
 region = Rect2(0, 64, 32, 32)
@@ -224,7 +234,15 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkfg8")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -533,6 +551,42 @@ _data = {
 "RESET": SubResource("Animation_6luna")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqh2e"]
+atlas = ExtResource("26_bj7b7")
+region = Rect2(0, 0, 64.0094, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okff1"]
+atlas = ExtResource("26_bj7b7")
+region = Rect2(127.952, 0, 64.0476, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olhb2"]
+atlas = ExtResource("26_bj7b7")
+region = Rect2(64.4235, 0, 63.6035, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2cpy"]
+atlas = ExtResource("27_epldr")
+region = Rect2(0, 0, 64.0466, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_270he"]
+atlas = ExtResource("27_epldr")
+region = Rect2(128.123, 0, 63.8772, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_coysk"]
+atlas = ExtResource("27_epldr")
+region = Rect2(64.0732, 0, 64.051, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dp8f"]
+atlas = ExtResource("27_ig0qn")
+region = Rect2(0, 0, 64.0094, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1klv1"]
+atlas = ExtResource("27_ig0qn")
+region = Rect2(128.12, 0.169174, 63.7571, 31.8171)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gavd"]
+atlas = ExtResource("27_ig0qn")
+region = Rect2(64.0094, 0, 64.1504, 32)
+
 [node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 0
@@ -737,7 +791,6 @@ health = 100
 [node name="Entity" parent="Players/Player" index="0"]
 visible = true
 sprite_frames = SubResource("SpriteFrames_dx8ww")
-animation = &"attack"
 
 [node name="Potions" type="HBoxContainer" parent="Players/Player"]
 offset_left = 9.0
@@ -816,6 +869,49 @@ stream = ExtResource("22_3oudr")
 position = Vector2(320, 180)
 script = ExtResource("23_48sfk")
 
+[node name="DeathScreen2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(310, 122)
+texture = ExtResource("25_f3we6")
+script = ExtResource("26_iuxpr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreen2"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 72.0
+
+[node name="PlayAgain" type="TextureButton" parent="DeathScreen2/VBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_mqh2e")
+texture_pressed = SubResource("AtlasTexture_okff1")
+texture_hover = SubResource("AtlasTexture_olhb2")
+
+[node name="MainMenu" type="TextureButton" parent="DeathScreen2/VBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_k2cpy")
+texture_pressed = SubResource("AtlasTexture_270he")
+texture_hover = SubResource("AtlasTexture_coysk")
+
+[node name="Quit" type="TextureButton" parent="DeathScreen2/VBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_7dp8f")
+texture_pressed = SubResource("AtlasTexture_1klv1")
+texture_hover = SubResource("AtlasTexture_4gavd")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DeathScreen2"]
+offset_left = -40.0
+offset_top = -60.0
+offset_bottom = -40.815
+text = "2"
+scroll_active = false
+
+[node name="Indicator" parent="." instance=ExtResource("30_vhkaw")]
+position = Vector2(46, 218)
+
+[node name="AnimatedSprite2D" parent="Indicator" index="0"]
+frame = 1
+
 [connection signal="pressed" from="Doors/LeftDoor" to="." method="_on_left_door_pressed"]
 [connection signal="pressed" from="Doors/RightDoor" to="." method="_on_right_door_pressed"]
 [connection signal="die_finished" from="SubViewport/DiceRoom" to="." method="_on_dice_room_die_finished"]
@@ -827,6 +923,10 @@ script = ExtResource("23_48sfk")
 [connection signal="animation_finished" from="ToStart/AnimationPlayer" to="." method="_start_animation_finished"]
 [connection signal="animation_finished" from="TransitionAnimation/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_transition_timer_timeout"]
+[connection signal="pressed" from="DeathScreen2/VBoxContainer/PlayAgain" to="DeathScreen2" method="_on_play_again_pressed"]
+[connection signal="pressed" from="DeathScreen2/VBoxContainer/MainMenu" to="DeathScreen2" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="DeathScreen2/VBoxContainer/Quit" to="DeathScreen2" method="_on_quit_pressed"]
 
 [editable path="Campfire"]
 [editable path="Players/Player"]
+[editable path="Indicator"]
