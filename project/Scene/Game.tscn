@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://go68735wem6n"]
+[gd_scene load_steps=107 format=3 uid="uid://go68735wem6n"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
 [ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
@@ -29,7 +29,8 @@
 [ext_resource type="Script" path="res://Scripts/death_screen.gd" id="26_iuxpr"]
 [ext_resource type="Texture2D" uid="uid://c635v2yo5067x" path="res://Assets/2D/UI/buttonMainMenu.png" id="27_epldr"]
 [ext_resource type="Texture2D" uid="uid://bbbg8yqus7p63" path="res://Assets/2D/UI/buttonQuit.png" id="27_ig0qn"]
-[ext_resource type="PackedScene" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
+[ext_resource type="PackedScene" uid="uid://bqyvd0ue3hpt" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
+[ext_resource type="AudioStream" uid="uid://df4jhfna2skex" path="res://Assets/Sound/click.wav" id="31_gj1l4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -657,10 +658,10 @@ offset_bottom = 23.0
 
 [node name="DiceMath" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -1.0
-offset_top = 124.0
-offset_right = 639.0
-offset_bottom = 164.0
+offset_left = 107.0
+offset_top = 249.0
+offset_right = 507.0
+offset_bottom = 287.66
 theme_override_fonts/normal_font = ExtResource("6_naelx")
 bbcode_enabled = true
 text = "[center]0"
@@ -678,11 +679,15 @@ position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_0wowx")
 
 [node name="DiceManager" type="HFlowContainer" parent="."]
-layout_mode = 0
-offset_left = 138.0
-offset_top = 4.0
-offset_right = 538.0
-offset_bottom = 204.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 109.0
+offset_top = 6.0
+offset_right = 509.0
+offset_bottom = 206.0
+grow_horizontal = 0
 alignment = 1
 script = ExtResource("8_5wrmq")
 
@@ -911,6 +916,9 @@ position = Vector2(46, 218)
 
 [node name="AnimatedSprite2D" parent="Indicator" index="0"]
 frame = 1
+
+[node name="UiClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("31_gj1l4")
 
 [connection signal="pressed" from="Doors/LeftDoor" to="." method="_on_left_door_pressed"]
 [connection signal="pressed" from="Doors/RightDoor" to="." method="_on_right_door_pressed"]

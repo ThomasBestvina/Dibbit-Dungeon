@@ -25,6 +25,7 @@ var last_clicked: String = ""
 var dead = false
 
 func _ready() -> void:
+	$UiClick.play()
 	randomize()
 	entities.append($Players/Player)
 	PlayerResources.player = $Players/Player
@@ -253,6 +254,7 @@ func _on_player_selected(node: Entity) -> void:
 
 
 func _on_roll_pressed() -> void:
+	$UiClick.play()
 	entities[turn].attack()
 	var double_roll = false
 	for i in $Players/Player/Potions.get_children():
@@ -331,18 +333,21 @@ func manage_room_change(room: String):
 
 
 func _on_left_door_pressed() -> void:
+	$UiClick.play()
 	$Indicator.hide()
 	play_up_animation()
 	last_clicked = $Doors/LeftDoor/Label.text
 
 
 func _on_right_door_pressed() -> void:
+	$UiClick.play()
 	$Indicator.hide()
 	play_up_animation()
 	last_clicked = $Doors/RightDoor/Label.text
 
 
 func _on_texture_button_pressed() -> void:
+	$UiClick.play()
 	var list = VBoxContainer.new()
 	add_child(list)
 	list.position = Vector2(160,85)
@@ -356,6 +361,7 @@ func _on_texture_button_pressed() -> void:
 
 
 func _on_potion_cancel_pressed() -> void:
+	$UiClick.play()
 	$PotionCancel.position.x -= 200
 	if(get_node_or_null("remove") != null):
 		get_node("remove").queue_free()
@@ -388,11 +394,3 @@ func _on_transition_timer_timeout() -> void:
 func _start_animation_finished(anim_name: StringName) -> void:
 	$ToStart.hide()
 	$Players/Player.show()
-
-
-func _on_play_again_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_main_menu_pressed() -> void:
-	pass # Replace with function body.

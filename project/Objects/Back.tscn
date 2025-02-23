@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0sfoordwhi84"]
+
+[ext_resource type="Texture2D" uid="uid://kfqjydr8mbiw" path="res://Assets/2D/UI/buttonReturn.png" id="1_yvdxi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2bqi"]
+atlas = ExtResource("1_yvdxi")
+region = Rect2(0, 0, 128.038, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2voq"]
+atlas = ExtResource("1_yvdxi")
+region = Rect2(256, 0, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2y2g0"]
+atlas = ExtResource("1_yvdxi")
+region = Rect2(128.004, 0.0103787, 128.009, 31.9896)
+
+[node name="PotionCancel" type="TextureButton"]
+offset_left = -199.0
+offset_top = 328.0
+offset_right = -71.0
+offset_bottom = 368.0
+texture_normal = SubResource("AtlasTexture_c2bqi")
+texture_pressed = SubResource("AtlasTexture_w2voq")
+texture_hover = SubResource("AtlasTexture_2y2g0")
