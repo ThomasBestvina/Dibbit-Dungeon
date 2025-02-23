@@ -32,7 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://bqyvd0ue3hpt" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
 [ext_resource type="AudioStream" uid="uid://df4jhfna2skex" path="res://Assets/Sound/click.wav" id="31_gj1l4"]
 [ext_resource type="FontFile" uid="uid://dxugtxh0y4c00" path="res://Assets/Fonts/FFFFORWA.TTF" id="31_lxcii"]
-[ext_resource type="AudioStream" uid="uid://wsxmdusyhik1" path="res://Assets/Sound/diceSong1.mp3" id="33_2fpt5"]
+[ext_resource type="AudioStream" uid="uid://da4r5gbrvbfj6" path="res://Assets/Sound/Music/obliterated.wav" id="32_i4qig"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -926,7 +926,7 @@ scroll_active = false
 stream = ExtResource("31_gj1l4")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("33_2fpt5")
+stream = ExtResource("32_i4qig")
 volume_db = -80.0
 
 [node name="TransitionAnimation" type="Node2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dv8ahmsirx316"]
+[gd_scene load_steps=18 format=3 uid="uid://dv8ahmsirx316"]
 
 [ext_resource type="Script" path="res://Scripts/Campfire.gd" id="1_8vuop"]
 [ext_resource type="Texture2D" uid="uid://dwly1eomr5b37" path="res://Assets/2D/Environment/LightShape.png" id="2_etvjx"]
@@ -19,6 +19,10 @@ region = Rect2(127.977, 0, 64.0342, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ujm8"]
 atlas = SubResource("CompressedTexture2D_kndvw")
 region = Rect2(63.9342, 0, 64.1069, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jwf4"]
+atlas = ExtResource("2_r65xq")
+region = Rect2(191.955, 0, 64.1215, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xiidx"]
 atlas = ExtResource("3_omeql")
@@ -95,7 +99,7 @@ offset_bottom = 36.0
 texture_normal = SubResource("AtlasTexture_cl3ub")
 texture_pressed = SubResource("AtlasTexture_6s8rh")
 texture_hover = SubResource("AtlasTexture_0ujm8")
-texture_disabled = SubResource("AtlasTexture_6s8rh")
+texture_disabled = SubResource("AtlasTexture_6jwf4")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(0, -1.90735e-06)

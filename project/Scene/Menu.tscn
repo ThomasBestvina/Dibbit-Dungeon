@@ -1,18 +1,17 @@
-[gd_scene load_steps=29 format=3 uid="uid://bh0vunoi43bgh"]
+[gd_scene load_steps=22 format=3 uid="uid://bh0vunoi43bgh"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_6pvpn"]
 [ext_resource type="Texture2D" uid="uid://wv8o1qwlhp6g" path="res://Assets/2D/UI/buttonPlay.png" id="2_3f1jx"]
 [ext_resource type="Texture2D" uid="uid://btmu7x1ogq8jd" path="res://Assets/2D/Main Menu/UJamBG.png" id="2_wkvxx"]
 [ext_resource type="Texture2D" uid="uid://b0fi2dlk0ifmp" path="res://Assets/2D/UI/buttonGuide.png" id="4_07mng"]
-[ext_resource type="Script" path="res://Scripts/sfx_control.gd" id="4_y3ml4"]
 [ext_resource type="Texture2D" uid="uid://bede7kjb0wv1t" path="res://Assets/2D/UI/buttonCredits.png" id="5_ffgha"]
-[ext_resource type="Texture2D" uid="uid://bid54depe5fuw" path="res://Assets/2D/UI/buttonSFX.png" id="5_t83sp"]
 [ext_resource type="Texture2D" uid="uid://ctss2qrkuh4sq" path="res://Assets/2D/Main Menu/UjamGuide.png" id="7_n1cnw"]
 [ext_resource type="PackedScene" uid="uid://c0sfoordwhi84" path="res://Objects/Back.tscn" id="8_2t2wj"]
 [ext_resource type="Texture2D" uid="uid://ck575m8gmtwcp" path="res://Assets/2D/Main Menu/uJamCredits.png" id="11_0k2x3"]
 [ext_resource type="PackedScene" uid="uid://bxy3qp2orvm5g" path="res://Objects/QuitButton.tscn" id="11_ddft2"]
 [ext_resource type="AudioStream" uid="uid://df4jhfna2skex" path="res://Assets/Sound/click.wav" id="12_dymy8"]
-[ext_resource type="AudioStream" uid="uid://dl0ruxvymp3p" path="res://Assets/Sound/dice2.mp3" id="13_ygdpa"]
+[ext_resource type="AudioStream" uid="uid://cxdq7s0fgo1u5" path="res://Assets/Sound/Music/mainMenu.wav" id="13_dd755"]
+[ext_resource type="Texture2D" uid="uid://cyj0ntdthw682" path="res://Assets/2D/Main Menu/ujamTitle.png" id="14_o5ot2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3874"]
 atlas = ExtResource("2_3f1jx")
@@ -50,30 +49,6 @@ region = Rect2(256.095, -0.076704, 127.847, 32.0653)
 atlas = ExtResource("5_ffgha")
 region = Rect2(128.18, -0.076704, 127.824, 32.0653)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_txfgx"]
-atlas = ExtResource("5_t83sp")
-region = Rect2(0, 0, 32.0665, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4mla5"]
-atlas = ExtResource("5_t83sp")
-region = Rect2(63.8721, 0, 32.1688, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fo8e4"]
-atlas = ExtResource("5_t83sp")
-region = Rect2(32.0035, 0, 32.0585, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_textv"]
-atlas = ExtResource("5_t83sp")
-region = Rect2(96.0202, 0, 31.9785, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jjndg"]
-atlas = ExtResource("5_t83sp")
-region = Rect2(159.982, 0, 32.0179, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4tffv"]
-atlas = ExtResource("5_t83sp")
-region = Rect2(127.978, 0, 31.9997, 32)
-
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -86,6 +61,10 @@ script = ExtResource("1_6pvpn")
 [node name="UJamBg" type="Sprite2D" parent="."]
 position = Vector2(320, 180)
 texture = ExtResource("2_wkvxx")
+
+[node name="UjamTitle" type="Sprite2D" parent="."]
+position = Vector2(320, 84)
+texture = ExtResource("14_o5ot2")
 
 [node name="Start" type="TextureButton" parent="."]
 layout_mode = 2
@@ -120,29 +99,6 @@ offset_top = 327.0
 offset_right = 64.0
 offset_bottom = 359.0
 
-[node name="SFXControl" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("4_y3ml4")
-
-[node name="On" type="TextureButton" parent="SFXControl"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture_normal = SubResource("AtlasTexture_txfgx")
-texture_pressed = SubResource("AtlasTexture_4mla5")
-texture_hover = SubResource("AtlasTexture_fo8e4")
-
-[node name="Off" type="TextureButton" parent="SFXControl"]
-layout_mode = 0
-offset_left = -80.0
-offset_right = -40.0
-offset_bottom = 40.0
-texture_normal = SubResource("AtlasTexture_textv")
-texture_pressed = SubResource("AtlasTexture_jjndg")
-texture_hover = SubResource("AtlasTexture_4tffv")
-
 [node name="UjamGuide" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(319, 179)
@@ -165,13 +121,12 @@ offset_bottom = 366.0
 stream = ExtResource("12_dymy8")
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_ygdpa")
+stream = ExtResource("13_dd755")
+volume_db = 4.0
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Guide" to="." method="_on_guide_pressed"]
 [connection signal="pressed" from="Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="SFXControl/On" to="SFXControl" method="_on_on_pressed"]
-[connection signal="pressed" from="SFXControl/Off" to="SFXControl" method="_on_off_pressed"]
 [connection signal="pressed" from="PotionCancel" to="." method="_on_potion_cancel_pressed"]
 [connection signal="finished" from="MenuMusic" to="." method="_on_menu_music_finished"]
