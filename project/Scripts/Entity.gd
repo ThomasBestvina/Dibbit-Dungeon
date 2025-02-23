@@ -60,10 +60,10 @@ func remove_health(val: int):
 	$HealthBar.value = float(health)/max_health*100
 	if(val > 0):
 		var damage_amount = hit_text.instantiate()
-		add_child(damage_amount)
+		PlayerResources.camera.get_parent().add_child(damage_amount)
 		damage_amount.text = "[color=ff3300]" + str(val)
-		damage_amount.scale = Vector2.ONE*min(max(0.25,(-val)/(max_health/2) ),2)
-		damage_amount.position += Vector2(randi_range(0,41),-randi_range(0,63))
+		damage_amount.scale =  Vector2.ONE*min(max(0.5,(-val)/(max_health/2)*1.5 ),3)
+		damage_amount.position = global_position+ Vector2(randi_range(0,41),-randi_range(0,63))
 		taking_damage = true
 		$HitPlayer.play()
 		begin_toggle()
@@ -71,10 +71,10 @@ func remove_health(val: int):
 		PlayerResources.camera.start_shake(5.0,0.5)
 	if(val < 0):
 		var heal_amount = hit_text.instantiate()
-		add_child(heal_amount)
+		PlayerResources.camera.get_parent().add_child(heal_amount)
 		heal_amount.text = "[color=33cc33]" + str(-val)
-		heal_amount.scale =  Vector2.ONE*min(max(0.25,(-val)/(max_health/2) ),2)
-		heal_amount.position += Vector2(randi_range(0,41),-randi_range(0,63))
+		heal_amount.scale =  Vector2.ONE*min(max(0.5,(-val)/(max_health/2)*1.5 ),3)
+		heal_amount.position = global_position+ Vector2(randi_range(0,41),-randi_range(0,63))
 		$HealPlayer.play()
 
 func attack():

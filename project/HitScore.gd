@@ -1,7 +1,5 @@
 extends RichTextLabel
 
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	modulate.a  = lerp(modulate.a, 0.0, 0.02)

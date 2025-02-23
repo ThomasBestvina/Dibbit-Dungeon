@@ -12,15 +12,18 @@ var dragged_item: Panel = null
 func _ready() -> void:
 	trash.connect("mouse_entered",_trash_entered)
 	trash.connect("mouse_exited",_trash_left)
-	for i: DiceRep in get_children():
-		i.connect("mouse_on_me", _on_die_entered)
-		i.connect("mouse_not_on_me", _on_die_left)
+	for i in get_children():
+		if i.name != "Trash":
+			i.connect("mouse_on_me", _on_die_entered)
+			i.connect("mouse_not_on_me", _on_die_left)
 	
 	add_die([1,2,3,4,5,6],Color.WEB_GRAY)
 	
 	for i in range(1):
 		var die = Lookup.generate_die()
 		add_die(die[0],die[1])
+
+
 
 func add_die(value,col):
 	var die = dierep.instantiate()

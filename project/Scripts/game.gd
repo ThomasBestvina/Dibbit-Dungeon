@@ -169,13 +169,13 @@ func _on_dice_room_die_finished(values: Array) -> void:
 	handle_turn()
 
 func handle_turn():
-	entities[turn].attack()
 	if turn == 0: 
 		for i in $Players/Player/Potions.get_children():
 			i.queue_free()
 		items_button.disabled = false
 		roll_button.disabled = false
 		return
+	entities[turn].attack()
 	dice_spawner.roll_dice(entities[turn].dice_values, entities[turn].dice_color_values)
 
 
@@ -242,6 +242,7 @@ func _on_player_selected(node: Entity) -> void:
 
 
 func _on_roll_pressed() -> void:
+	entities[turn].attack()
 	var double_roll = false
 	for i in $Players/Player/Potions.get_children():
 		if i.id == "reroll":
