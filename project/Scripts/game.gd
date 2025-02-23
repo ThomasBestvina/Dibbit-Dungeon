@@ -25,6 +25,7 @@ var last_clicked: String = ""
 var dead = false
 
 func _ready() -> void:
+	$Music.play()
 	$UiClick.play()
 	randomize()
 	entities.append($Players/Player)
@@ -33,9 +34,15 @@ func _ready() -> void:
 	$Doors/RightDoor.disabled = true
 	spawn_wave()
 	_on_dice_room_die_finished([])
+	$TransitionAnimation/AnimationPlayer.play("OpenCurtains")
 
 func _process(delta: float) -> void:
+	$Music.volume_db = lerp($Music.volume_db,-14.0,0.05)
+	if(Input.is_action_just_pressed("quick_reset")):
+		$DeathScreen2._on_play_again_pressed()
 	if(dead):
+		$MainMenu.hide()
+		$PlayAgain.hide()
 		$Players/Player/Entity.play("death")
 		$BoxContainer/Roll.disabled = true 
 		$BoxContainer/Items.disabled = true
@@ -394,3 +401,7 @@ func _on_transition_timer_timeout() -> void:
 func _start_animation_finished(anim_name: StringName) -> void:
 	$ToStart.hide()
 	$Players/Player.show()
+
+
+func _on_music_finished() -> void:
+	$Music.play()

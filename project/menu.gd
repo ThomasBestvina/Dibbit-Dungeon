@@ -1,5 +1,10 @@
 extends Control
 
+func _ready() -> void:
+	$MenuMusic.play()
+
+
+
 func _on_start_pressed() -> void:
 	get_tree().change_scene_to_packed(preload("res://Scene/Game.tscn"))
 
@@ -25,3 +30,7 @@ func _on_credits_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_menu_music_finished() -> void:
+	$MenuMusic.play()

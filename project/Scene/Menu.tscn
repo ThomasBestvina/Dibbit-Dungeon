@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bh0vunoi43bgh"]
+[gd_scene load_steps=29 format=3 uid="uid://bh0vunoi43bgh"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_6pvpn"]
 [ext_resource type="Texture2D" uid="uid://wv8o1qwlhp6g" path="res://Assets/2D/UI/buttonPlay.png" id="2_3f1jx"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ck575m8gmtwcp" path="res://Assets/2D/Main Menu/uJamCredits.png" id="11_0k2x3"]
 [ext_resource type="PackedScene" uid="uid://bxy3qp2orvm5g" path="res://Objects/QuitButton.tscn" id="11_ddft2"]
 [ext_resource type="AudioStream" uid="uid://df4jhfna2skex" path="res://Assets/Sound/click.wav" id="12_dymy8"]
+[ext_resource type="AudioStream" uid="uid://dl0ruxvymp3p" path="res://Assets/Sound/dice2.mp3" id="13_ygdpa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3874"]
 atlas = ExtResource("2_3f1jx")
@@ -164,6 +165,7 @@ offset_bottom = 366.0
 stream = ExtResource("12_dymy8")
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_ygdpa")
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Guide" to="." method="_on_guide_pressed"]
@@ -172,3 +174,4 @@ stream = ExtResource("12_dymy8")
 [connection signal="pressed" from="SFXControl/On" to="SFXControl" method="_on_on_pressed"]
 [connection signal="pressed" from="SFXControl/Off" to="SFXControl" method="_on_off_pressed"]
 [connection signal="pressed" from="PotionCancel" to="." method="_on_potion_cancel_pressed"]
+[connection signal="finished" from="MenuMusic" to="." method="_on_menu_music_finished"]

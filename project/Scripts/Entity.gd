@@ -56,7 +56,7 @@ func init():
 
 func remove_health(val: int):
 	if(health <= 0): return
-	if(health == max_health && val >= max_health*2):
+	if(health == max_health && val >= max_health):
 		var ob = preload("res://Objects/Obliterated.tscn").instantiate()
 		PlayerResources.camera.add_child(ob)
 	health -= val

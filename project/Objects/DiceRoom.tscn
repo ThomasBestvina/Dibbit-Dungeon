@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://b51iigyvgwb8e"]
+[gd_scene load_steps=9 format=3 uid="uid://b51iigyvgwb8e"]
 
 [ext_resource type="Script" path="res://Scripts/DiceSpawner.gd" id="1_nrmtl"]
+[ext_resource type="Texture2D" uid="uid://cu4iqjsc70o0j" path="res://Assets/2D/UI/diceBoard.png" id="2_a0665"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j4i3r"]
 size = Vector3(1, 1, 2.15735)
@@ -13,22 +14,12 @@ size = Vector3(1, 1, 2.4389)
 [sub_resource type="BoxShape3D" id="BoxShape3D_gaemq"]
 size = Vector3(2.66479, 1, 2.54272)
 
-[sub_resource type="Gradient" id="Gradient_tsb7b"]
-offsets = PackedFloat32Array(0, 0.0555556, 1)
-colors = PackedColorArray(0.1443, 0.39, 0.25077, 1, 0.307462, 0.630389, 0.446, 1, 1, 1, 1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_bkg1q"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ktmf4"]
-color_ramp = SubResource("Gradient_tsb7b")
-noise = SubResource("FastNoiseLite_bkg1q")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7lbsv"]
-albedo_color = Color(0.00742024, 0.21405, 0.0771189, 1)
-albedo_texture = SubResource("NoiseTexture2D_ktmf4")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v5y8l"]
+shading_mode = 0
+albedo_texture = ExtResource("2_a0665")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xru5x"]
-material = SubResource("StandardMaterial3D_7lbsv")
+material = SubResource("StandardMaterial3D_v5y8l")
 
 [node name="DiceRoom" type="Node3D"]
 script = ExtResource("1_nrmtl")
@@ -84,14 +75,15 @@ size = 1.752
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("PlaneMesh_xru5x")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.165323, 0.98624, 0, -0.98624, -0.165323, 0, 2.88959, 0)
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 
 [node name="Backup" type="Timer" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.672311, 0)
+directional_shadow_mode = 0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Backup" to="." method="_on_backup_timeout"]

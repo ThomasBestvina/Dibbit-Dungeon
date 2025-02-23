@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://go68735wem6n"]
+[gd_scene load_steps=109 format=3 uid="uid://go68735wem6n"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
 [ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
@@ -31,6 +31,8 @@
 [ext_resource type="Texture2D" uid="uid://bbbg8yqus7p63" path="res://Assets/2D/UI/buttonQuit.png" id="27_ig0qn"]
 [ext_resource type="PackedScene" uid="uid://bqyvd0ue3hpt" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
 [ext_resource type="AudioStream" uid="uid://df4jhfna2skex" path="res://Assets/Sound/click.wav" id="31_gj1l4"]
+[ext_resource type="FontFile" uid="uid://dxugtxh0y4c00" path="res://Assets/Fonts/FFFFORWA.TTF" id="31_lxcii"]
+[ext_resource type="AudioStream" uid="uid://wsxmdusyhik1" path="res://Assets/Sound/diceSong1.mp3" id="33_2fpt5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -462,6 +464,42 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqh2e"]
+atlas = ExtResource("26_bj7b7")
+region = Rect2(0, 0, 64.0094, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okff1"]
+atlas = ExtResource("26_bj7b7")
+region = Rect2(127.952, 0, 64.0476, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olhb2"]
+atlas = ExtResource("26_bj7b7")
+region = Rect2(64.4235, 0, 63.6035, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2cpy"]
+atlas = ExtResource("27_epldr")
+region = Rect2(0, 0, 64.0466, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_270he"]
+atlas = ExtResource("27_epldr")
+region = Rect2(128.123, 0, 63.8772, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_coysk"]
+atlas = ExtResource("27_epldr")
+region = Rect2(64.0732, 0, 64.051, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dp8f"]
+atlas = ExtResource("27_ig0qn")
+region = Rect2(0, 0, 64.0094, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1klv1"]
+atlas = ExtResource("27_ig0qn")
+region = Rect2(128.12, 0.169174, 63.7571, 31.8171)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gavd"]
+atlas = ExtResource("27_ig0qn")
+region = Rect2(64.0094, 0, 64.1504, 32)
+
 [sub_resource type="Animation" id="Animation_d8ffr"]
 resource_name = "CloseCurtains"
 length = 1.5
@@ -551,42 +589,6 @@ _data = {
 "OpenCurtains": SubResource("Animation_0enm4"),
 "RESET": SubResource("Animation_6luna")
 }
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mqh2e"]
-atlas = ExtResource("26_bj7b7")
-region = Rect2(0, 0, 64.0094, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_okff1"]
-atlas = ExtResource("26_bj7b7")
-region = Rect2(127.952, 0, 64.0476, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_olhb2"]
-atlas = ExtResource("26_bj7b7")
-region = Rect2(64.4235, 0, 63.6035, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k2cpy"]
-atlas = ExtResource("27_epldr")
-region = Rect2(0, 0, 64.0466, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_270he"]
-atlas = ExtResource("27_epldr")
-region = Rect2(128.123, 0, 63.8772, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_coysk"]
-atlas = ExtResource("27_epldr")
-region = Rect2(64.0732, 0, 64.051, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7dp8f"]
-atlas = ExtResource("27_ig0qn")
-region = Rect2(0, 0, 64.0094, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1klv1"]
-atlas = ExtResource("27_ig0qn")
-region = Rect2(128.12, 0.169174, 63.7571, 31.8171)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4gavd"]
-atlas = ExtResource("27_ig0qn")
-region = Rect2(64.0094, 0, 64.1504, 32)
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -721,9 +723,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 1.0
-offset_top = 183.245
-offset_right = 128.0
-offset_bottom = 284.245
+offset_top = 182.245
+offset_right = 129.0
+offset_bottom = 283.245
 grow_vertical = 0
 vertical = true
 
@@ -785,6 +787,12 @@ offset_top = 232.0
 offset_right = 318.0
 offset_bottom = 232.0
 
+[node name="Indicator" parent="." instance=ExtResource("30_vhkaw")]
+position = Vector2(46, 218)
+
+[node name="AnimatedSprite2D" parent="Indicator" index="0"]
+frame = 1
+
 [node name="Players" type="Node2D" parent="."]
 position = Vector2(15, 232)
 
@@ -841,34 +849,34 @@ libraries = {
 "": SubResource("AnimationLibrary_dfwgn")
 }
 
-[node name="TransitionAnimation" type="Node2D" parent="."]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="TransitionAnimation"]
-root_node = NodePath("../..")
-libraries = {
-"": SubResource("AnimationLibrary_ekcn3")
-}
-
-[node name="curt1" type="Sprite2D" parent="TransitionAnimation"]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(-339, 71)
-scale = Vector2(-5.29935, 10.8086)
-texture = ExtResource("20_5n3k3")
-
-[node name="curt2" type="Sprite2D" parent="TransitionAnimation"]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(980, 54)
-scale = Vector2(-5.29935, 10.8086)
-texture = ExtResource("20_5n3k3")
-
 [node name="TransitionTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="SelectAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_4jbk1")
 
+[node name="PlayAgain" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 575.0
+offset_top = 291.0
+offset_right = 639.0
+offset_bottom = 323.0
+texture_normal = SubResource("AtlasTexture_mqh2e")
+texture_pressed = SubResource("AtlasTexture_okff1")
+texture_hover = SubResource("AtlasTexture_olhb2")
+
 [node name="TrashItem" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_3oudr")
+
+[node name="MainMenu" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 575.0
+offset_top = 327.0
+offset_right = 639.0
+offset_bottom = 359.0
+texture_normal = SubResource("AtlasTexture_k2cpy")
+texture_pressed = SubResource("AtlasTexture_270he")
+texture_hover = SubResource("AtlasTexture_coysk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, 180)
@@ -906,19 +914,40 @@ texture_hover = SubResource("AtlasTexture_4gavd")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DeathScreen2"]
 offset_left = -40.0
-offset_top = -60.0
-offset_bottom = -40.815
+offset_top = -58.0
+offset_bottom = -38.815
+theme_override_fonts/normal_font = ExtResource("31_lxcii")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
 text = "2"
 scroll_active = false
 
-[node name="Indicator" parent="." instance=ExtResource("30_vhkaw")]
-position = Vector2(46, 218)
-
-[node name="AnimatedSprite2D" parent="Indicator" index="0"]
-frame = 1
-
 [node name="UiClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("31_gj1l4")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("33_2fpt5")
+volume_db = -80.0
+
+[node name="TransitionAnimation" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TransitionAnimation"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_ekcn3")
+}
+
+[node name="curt1" type="Sprite2D" parent="TransitionAnimation"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-339, 71)
+scale = Vector2(-5.29935, 10.8086)
+texture = ExtResource("20_5n3k3")
+
+[node name="curt2" type="Sprite2D" parent="TransitionAnimation"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(980, 54)
+scale = Vector2(-5.29935, 10.8086)
+texture = ExtResource("20_5n3k3")
 
 [connection signal="pressed" from="Doors/LeftDoor" to="." method="_on_left_door_pressed"]
 [connection signal="pressed" from="Doors/RightDoor" to="." method="_on_right_door_pressed"]
@@ -929,12 +958,15 @@ stream = ExtResource("31_gj1l4")
 [connection signal="bought_die" from="Shop" to="DiceManager" method="_on_shop_bought_die"]
 [connection signal="selected" from="Players/Player" to="." method="_on_player_selected"]
 [connection signal="animation_finished" from="ToStart/AnimationPlayer" to="." method="_start_animation_finished"]
-[connection signal="animation_finished" from="TransitionAnimation/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_transition_timer_timeout"]
+[connection signal="pressed" from="PlayAgain" to="DeathScreen2" method="_on_play_again_pressed"]
+[connection signal="pressed" from="MainMenu" to="DeathScreen2" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="DeathScreen2/VBoxContainer/PlayAgain" to="DeathScreen2" method="_on_play_again_pressed"]
 [connection signal="pressed" from="DeathScreen2/VBoxContainer/MainMenu" to="DeathScreen2" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="DeathScreen2/VBoxContainer/Quit" to="DeathScreen2" method="_on_quit_pressed"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]
+[connection signal="animation_finished" from="TransitionAnimation/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 
 [editable path="Campfire"]
-[editable path="Players/Player"]
 [editable path="Indicator"]
+[editable path="Players/Player"]
