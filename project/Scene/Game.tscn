@@ -691,10 +691,11 @@ position = Vector2(15, 232)
 
 [node name="Player" parent="Players" instance=ExtResource("3_hkwdk")]
 player = true
-max_health = 150
-health = 150
+max_health = 125
+health = 125
 
 [node name="Entity" parent="Players/Player" index="0"]
+visible = true
 sprite_frames = SubResource("SpriteFrames_dx8ww")
 animation = &"idle_combat"
 
@@ -787,4 +788,5 @@ script = ExtResource("23_48sfk")
 [connection signal="animation_finished" from="TransitionAnimation/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_transition_timer_timeout"]
 
+[editable path="Campfire"]
 [editable path="Players/Player"]

@@ -148,7 +148,7 @@ func _on_dice_room_die_finished(values: Array) -> void:
 		else:
 			selected.remove_health(damage)
 		if(healroll):
-			selected.remove_health(-damage * 0.1)
+			entities[0].remove_health(-damage * 0.1)
 	else:
 		if(defend):
 			entities[0].remove_health(damage * 0.5)
@@ -167,6 +167,7 @@ func handle_turn():
 		roll_button.disabled = false
 		return
 	dice_spawner.roll_dice(entities[turn].dice_values, entities[turn].dice_color_values)
+	entities[turn].attack()
 
 
 func spawn_wave():
@@ -213,6 +214,9 @@ func spawn_wave():
 	budget += 1
 	budget *= 1.1
 	PlayerResources.round += 1
+	
+	for i in entities:
+		i.init()
 
 
 func _on_player_selected(node: Entity) -> void:
@@ -281,6 +285,7 @@ func manage_room_change(room: String):
 			$Doors/LeftDoor.disabled = true
 			$Doors/RightDoor/Label.text = "f"
 			$Doors/RightDoor/AnimatedSprite2D.frame = 2
+			$Campfire/Button.disabled = false
 		"f":
 			$Shop.hide()
 			$Environment/DiceBorder.show()

@@ -25,6 +25,21 @@ func _ready() -> void:
 	if(player):
 		$Entity.play("idle_combat")
 
+func init():
+	if player: return
+	if max_health > 50*len(dice_values):
+		$Entity.hide()
+		$Horse.hide()
+		$heartCard.show()
+	elif max_health < 10*len(dice_values):
+		$Entity.show()
+		$Horse.hide()
+		$heartCard.hide()
+	else:
+		$Entity.hide()
+		$Horse.show()
+		$heartCard.hide()
+
 func remove_health(val: int):
 	if(health == max_health && val >= max_health*2):
 		var ob = preload("res://Objects/Obliterated.tscn").instantiate()
@@ -39,6 +54,9 @@ func remove_health(val: int):
 	if(val < 0):
 		$HealPlayer.play()
 
+func attack():
+	$heartCard.play("attack")
+	$Horse.play("attack")
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton && !player:
@@ -49,5 +67,11 @@ func add_potion(id):
 	var potion = potion_pre.instantiate()
 	$Potions.add_child(potion)
 	potion.id = id
-	print(potion.id)
 	potion.modulate = Lookup.potion_color_lookup(id)
+
+
+func _on_horse_animation_finished() -> void:
+	$Horse.play("default")
+
+func _on_heart_card_animation_finished() -> void:
+	$heartCard.play("default")
