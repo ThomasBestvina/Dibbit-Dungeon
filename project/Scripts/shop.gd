@@ -2,6 +2,7 @@
 extends Control
 
 var die_cost = 5
+var potion_cost = 2
 
 signal bought_die(values, color)
 
@@ -23,9 +24,10 @@ func generate_shop():
 	$Buy3/DieRep.show()
 	$Buy3/Cost.text = "[center]" + str(die_cost)
 	
-	var potion_cost = int((1+PlayerResources.round)*1.2)
+	potion_cost = int((1+PlayerResources.round)*1.2)
 	var potion1 = get_random_potion()
 	var potion2 = get_random_potion()
+	
 	
 	$Buy0/PotionPanel.show()
 	$Buy1/PotionPanel.show()
@@ -42,22 +44,21 @@ func generate_shop():
 	$Buy1/PotionPanel.id = potion1
 	$Buy0/PotionPanel.id = potion2
 
+
 func get_random_potion():
 	var lst = ["heal","healroll","modroll","defend","reroll"]
 	return lst[randi() % len(lst)]
 
 func _on_buy_0_pressed() -> void:
-	if(PlayerResources.money >= die_cost && $Buy0/PotionPanel.visible):
-		PlayerResources.money -= die_cost
+	if(PlayerResources.money >= potion_cost && $Buy0/PotionPanel.visible):
+		PlayerResources.money -= potion_cost
 		PlayerResources.items.append($Buy0/PotionPanel.id)
 		$Buy0/PotionPanel.hide()
 		$Buy.play()
 
-
-
 func _on_buy_1_pressed() -> void:
-	if(PlayerResources.money >= die_cost && $Buy1/PotionPanel.visible):
-		PlayerResources.money -= die_cost
+	if(PlayerResources.money >= potion_cost && $Buy1/PotionPanel.visible):
+		PlayerResources.money -= potion_cost
 		PlayerResources.items.append($Buy1/PotionPanel.id)
 		$Buy1/PotionPanel.hide()
 		$Buy.play()

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn3v7i323jx07"]
+
+[ext_resource type="AudioStream" uid="uid://dh1n8ejrav0j5" path="res://Assets/Sound/obliterated SFX.wav" id="1_qtg56"]
+[ext_resource type="Script" path="res://Objects/obliterated.gd" id="2_pe51c"]
+
+[node name="Obliterated" type="AudioStreamPlayer"]
+stream = ExtResource("1_qtg56")
+volume_db = -4.0
+script = ExtResource("2_pe51c")

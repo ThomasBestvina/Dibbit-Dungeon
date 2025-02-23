@@ -325,6 +325,8 @@ func _on_potion_cancel_pressed() -> void:
 		get_node("remove").queue_free()
 
 func play_up_animation():
+	$Doors/LeftDoor.hide()
+	$Doors/RightDoor.hide()
 	$ToDoor.show()
 	$Players.hide()
 	$ToDoor/UpPath/AnimatedSprite2D.play("Running")

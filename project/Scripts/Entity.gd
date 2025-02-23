@@ -26,6 +26,9 @@ func _ready() -> void:
 		$Entity.play("idle_combat")
 
 func remove_health(val: int):
+	if(health == max_health && val >= max_health*2):
+		var ob = preload("res://Objects/Obliterated.tscn").instantiate()
+		PlayerResources.camera.add_child(ob)
 	health -= val
 	health = min(max_health, health)
 	$HealthText.text = "[center]"+str(health)
