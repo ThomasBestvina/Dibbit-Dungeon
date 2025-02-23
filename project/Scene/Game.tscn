@@ -29,7 +29,7 @@
 [ext_resource type="Script" path="res://Scripts/death_screen.gd" id="26_iuxpr"]
 [ext_resource type="Texture2D" uid="uid://c635v2yo5067x" path="res://Assets/2D/UI/buttonMainMenu.png" id="27_epldr"]
 [ext_resource type="Texture2D" uid="uid://bbbg8yqus7p63" path="res://Assets/2D/UI/buttonQuit.png" id="27_ig0qn"]
-[ext_resource type="PackedScene" uid="uid://dp74vcgfh4d35" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
+[ext_resource type="PackedScene" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
