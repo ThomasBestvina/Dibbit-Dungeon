@@ -30,16 +30,12 @@ func _ready() -> void:
 	$Horse.play()
 
 func _process(_delta: float) -> void:
-	if(health <= 0): 
-		$HealthText.text = "[center]0"
-		return
 	if taking_damage:
 		$Entity.play("hit")
 		$heartCard.play("hit")
 		$Horse.play("hit")
 
 func init():
-	if(health <= 0): return
 	if player: return
 	if max_health > 30*len(dice_values):
 		$Entity.hide()
@@ -55,7 +51,6 @@ func init():
 		$heartCard.hide()
 
 func remove_health(val: int):
-	if(health <= 0): return
 	if(health == max_health && val >= max_health*2):
 		var ob = preload("res://Objects/Obliterated.tscn").instantiate()
 		PlayerResources.camera.add_child(ob)
@@ -83,7 +78,6 @@ func remove_health(val: int):
 		$HealPlayer.play()
 
 func attack():
-	if(health <= 0): return
 	$heartCard.play("attack")
 	$Horse.play("attack")
 	$Entity.play("attack")
@@ -125,17 +119,14 @@ func _on_heart_card_animation_finished() -> void:
 
 
 func _on_entity_animation_finished() -> void:
-	if(health >= 0):
-		$Entity.play("default")
+	$Entity.play("default")
 
 
 func _on_taking_damage_timeout() -> void:
-	if(health <= 0): return
 	taking_damage = false
 	$Entity.modulate = Color.WHITE
 	$heartCard.modulate = Color.WHITE
 	$Horse.modulate = Color.WHITE
-	if(health >= 0):
-		$Entity.play("default")
+	$Entity.play("default")
 	$heartCard.play("default")
 	$Horse.play("default")

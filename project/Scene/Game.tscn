@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [gd_scene load_steps=91 format=3 uid="uid://go68735wem6n"]
+=======
+[gd_scene load_steps=90 format=3 uid="uid://go68735wem6n"]
+>>>>>>> 65bfb81e296577157fb173a707856ec91f4bd387
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
 [ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
@@ -24,7 +28,10 @@
 [ext_resource type="AudioStream" uid="uid://ck85f4oggoqmy" path="res://Assets/Sound/select.wav" id="21_4jbk1"]
 [ext_resource type="AudioStream" uid="uid://bqjuox6ru6yk5" path="res://Assets/Sound/trashitem.wav" id="22_3oudr"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="23_48sfk"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://cycinop73ru1f" path="res://Objects/Indicator.tscn" id="30_vhkaw"]
+=======
+>>>>>>> 65bfb81e296577157fb173a707856ec91f4bd387
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -817,9 +824,12 @@ stream = ExtResource("22_3oudr")
 position = Vector2(320, 180)
 script = ExtResource("23_48sfk")
 
+<<<<<<< HEAD
 [node name="Indicator" parent="." instance=ExtResource("30_vhkaw")]
 position = Vector2(46, 218)
 
+=======
+>>>>>>> 65bfb81e296577157fb173a707856ec91f4bd387
 [connection signal="pressed" from="Doors/LeftDoor" to="." method="_on_left_door_pressed"]
 [connection signal="pressed" from="Doors/RightDoor" to="." method="_on_right_door_pressed"]
 [connection signal="die_finished" from="SubViewport/DiceRoom" to="." method="_on_dice_room_die_finished"]

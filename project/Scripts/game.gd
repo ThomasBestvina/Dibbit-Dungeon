@@ -22,8 +22,6 @@ var rooms_picked = false
 
 var last_clicked: String = ""
 
-var dead = false
-
 func _ready() -> void:
 	randomize()
 	entities.append($Players/Player)
@@ -34,13 +32,8 @@ func _ready() -> void:
 	_on_dice_room_die_finished([])
 
 func _process(delta: float) -> void:
-	if(dead):
-		$Players/Player/Entity.play("death")
-		$BoxContainer/Roll.disabled = true 
-		$BoxContainer/Items.disabled = true
-		$Players/Player.health = 0
-		turn = 0
-		return
+	if(get_node_or_null("Players/Player") == null):
+		get_tree().change_scene_to_packed(preload("res://Scene/Menu.tscn"))
 	if(get_node_or_null("remove") != null && len(PlayerResources.items) == 0) :
 		_on_potion_cancel_pressed()
 		get_node("remove").queue_free()
@@ -143,7 +136,7 @@ func pick_rooms():
 		$Doors/RightDoor/AnimatedSprite2D.frame = 2
 
 func _on_dice_room_die_finished(values: Array) -> void:
-	if(len(values) == 0 || $Players/Player.health <= 0): return
+	if(len(values) == 0): return
 	var defend: bool = false
 	var healroll: bool = false
 	var modroll: bool = false
@@ -176,17 +169,13 @@ func _on_dice_room_die_finished(values: Array) -> void:
 	handle_turn()
 
 func handle_turn():
-	$Indicator.show()
-	$Indicator.global_position = entities[turn].get_node("Horse").global_position
 	if turn == 0: 
-		$Indicator/AnimatedSprite2D.frame = 1
 		for i in $Players/Player/Potions.get_children():
 			i.queue_free()
 		items_button.disabled = false
 		roll_button.disabled = false
 		return
 	entities[turn].attack()
-	$Indicator/AnimatedSprite2D.frame = 0
 	dice_spawner.roll_dice(entities[turn].dice_values, entities[turn].dice_color_values)
 
 
@@ -268,17 +257,12 @@ func _on_roll_pressed() -> void:
 func kill_dead_enemies():
 	for i: Entity in entities.duplicate():
 		if(i.health <= 0):
-			if(i.name == "Player"):
-				dead = true
-				i.get_node("Entity").play("death")
-				$DeathScreen2.show()
-				return
 			PlayerResources.money += int(i.max_health/10)+len(i.dice_values)
 			entities.erase(i)
 			if !i.player:
 				var expl = explosion.instantiate()
 				add_child(expl)
-				expl.global_position = i.get_node("Horse").global_position
+				expl.position = i.position
 			i.queue_free()
 			$Camera2D.start_shake(10.0,0.5)
 		
@@ -291,7 +275,6 @@ func manage_room_change(room: String):
 	# Were just cheating and changing around some props.
 	match room:
 		"s":
-			$Indicator.hide()
 			$Shop.show()
 			$Shop.generate_shop()
 			$DiceMath.hide()
@@ -303,7 +286,6 @@ func manage_room_change(room: String):
 			$Doors/RightDoor.show()
 			$Campfire.hide()
 		"c":
-			$Indicator.hide()
 			$Campfire.show()
 			$Environment/DiceBorder.hide()
 			$Shop.hide()
@@ -315,7 +297,6 @@ func manage_room_change(room: String):
 			$Doors/RightDoor/AnimatedSprite2D.frame = 2
 			$Campfire/Button.disabled = false
 		"f":
-			$Indicator.show()
 			$Shop.hide()
 			$Environment/DiceBorder.show()
 			$Doors/LeftDoor.hide()
@@ -331,13 +312,11 @@ func manage_room_change(room: String):
 
 
 func _on_left_door_pressed() -> void:
-	$Indicator.hide()
 	play_up_animation()
 	last_clicked = $Doors/LeftDoor/Label.text
 
 
 func _on_right_door_pressed() -> void:
-	$Indicator.hide()
 	play_up_animation()
 	last_clicked = $Doors/RightDoor/Label.text
 
@@ -388,11 +367,3 @@ func _on_transition_timer_timeout() -> void:
 func _start_animation_finished(anim_name: StringName) -> void:
 	$ToStart.hide()
 	$Players/Player.show()
-
-
-func _on_play_again_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_main_menu_pressed() -> void:
-	pass # Replace with function body.
