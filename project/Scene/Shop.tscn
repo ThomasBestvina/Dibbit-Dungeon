@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ceq8618ebypjv"]
+[gd_scene load_steps=8 format=3 uid="uid://ceq8618ebypjv"]
 
 [ext_resource type="Script" path="res://Scripts/shop.gd" id="1_111bm"]
 [ext_resource type="FontFile" uid="uid://dxugtxh0y4c00" path="res://Assets/Fonts/FFFFORWA.TTF" id="2_6mgxb"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b43g85rjlrejp" path="res://Objects/DieRep.tscn" id="3_imhv7"]
 [ext_resource type="PackedScene" uid="uid://h4q30iacukt1" path="res://Objects/PotionPanel.tscn" id="3_xa1sm"]
 [ext_resource type="FontFile" uid="uid://cxlec2b531som" path="res://Assets/Fonts/Bitmgothic.ttf" id="4_eps0w"]
+[ext_resource type="AudioStream" uid="uid://duidjgxk7etp6" path="res://Assets/Sound/buy.wav" id="7_c4a77"]
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -171,6 +172,9 @@ offset_left = 16.0
 offset_top = 2.0
 offset_right = 48.0
 offset_bottom = 142.0
+
+[node name="Buy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_c4a77")
 
 [connection signal="pressed" from="Buy0" to="." method="_on_buy_0_pressed"]
 [connection signal="pressed" from="Buy1" to="." method="_on_buy_1_pressed"]

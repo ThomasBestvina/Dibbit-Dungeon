@@ -16,6 +16,8 @@ signal selected(node: Entity)
 
 @onready var potion_pre = preload("res://Objects/PotionPanel.tscn")
 
+
+
 func _ready() -> void:
 	$Selected.play()
 	$HealthText.text = "[center]"+str(health)
@@ -28,8 +30,9 @@ func remove_health(val: int):
 	health = min(max_health, health)
 	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
-	if(!player && val > 0):
+	if(val > 0):
 		$HitPlayer.play()
+		PlayerResources.camera.start_shake(5.0,0.5)
 	if(val < 0):
 		$HealPlayer.play()
 

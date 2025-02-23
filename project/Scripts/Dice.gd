@@ -30,3 +30,7 @@ func get_current_value():
 			cur_side = sides[int(str(i.name))]
 			highest_y_axis = i.global_position.y
 	return cur_side
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	$AudioStreamPlayer.play()

@@ -59,6 +59,7 @@ func _input(event: InputEvent) -> void:
 			if(hover_trash):
 				PlayerResources.money += PlayerResources.round*1.25
 				dragged_item.queue_free()
+				get_parent().get_node("TrashItem").play()
 			dragged_item = null
 
 func _process(delta: float) -> void:

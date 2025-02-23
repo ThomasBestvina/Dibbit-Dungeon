@@ -1,6 +1,77 @@
-[gd_scene load_steps=2 format=3 uid="uid://dv8ahmsirx316"]
+[gd_scene load_steps=16 format=3 uid="uid://dv8ahmsirx316"]
 
 [ext_resource type="Script" path="res://Scripts/Campfire.gd" id="1_8vuop"]
+[ext_resource type="Texture2D" uid="uid://dwly1eomr5b37" path="res://Assets/2D/Environment/LightShape.png" id="2_etvjx"]
+[ext_resource type="Texture2D" uid="uid://bmg7q2khjj6gb" path="res://Assets/2D/UI/buttonHeal.png" id="2_r65xq"]
+[ext_resource type="Texture2D" uid="uid://b20ytbldj818b" path="res://Assets/2D/Environment/campfire.png" id="3_omeql"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cl3ub"]
+atlas = ExtResource("2_r65xq")
+region = Rect2(0, 0, 64.0115, 32)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kndvw"]
+load_path = "res://.godot/imported/buttonHeal.png-60fc2bb7c8d7d908ac349818cc76bb05.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6s8rh"]
+atlas = SubResource("CompressedTexture2D_kndvw")
+region = Rect2(127.977, 0, 64.0342, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xiidx"]
+atlas = ExtResource("3_omeql")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1qxa"]
+atlas = ExtResource("3_omeql")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnc6m"]
+atlas = ExtResource("3_omeql")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20ocf"]
+atlas = ExtResource("3_omeql")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_py740"]
+atlas = ExtResource("3_omeql")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64uad"]
+atlas = ExtResource("3_omeql")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kxbe"]
+atlas = ExtResource("3_omeql")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ycea2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xiidx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1qxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnc6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20ocf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_py740")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64uad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kxbe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Campfire" type="Control"]
 layout_mode = 3
@@ -11,11 +82,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8vuop")
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="TextureButton" parent="."]
 layout_mode = 1
-offset_right = 43.0
-offset_bottom = 31.0
-text = "Heal"
+offset_left = -33.0
+offset_top = 4.0
+offset_right = 31.0
+offset_bottom = 36.0
+texture_normal = SubResource("AtlasTexture_cl3ub")
+texture_pressed = SubResource("AtlasTexture_6s8rh")
+texture_hover = SubResource("AtlasTexture_6s8rh")
+texture_disabled = SubResource("AtlasTexture_6s8rh")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -1.90735e-06)
+scale = Vector2(10, 10)
+energy = 1.1
+blend_mode = 2
+texture = ExtResource("2_etvjx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_ycea2")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="visibility_changed" from="Button" to="." method="_on_button_visibility_changed"]

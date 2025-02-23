@@ -27,6 +27,10 @@ func generate_shop():
 	var potion1 = get_random_potion()
 	var potion2 = get_random_potion()
 	
+	$Buy0/PotionPanel.show()
+	$Buy1/PotionPanel.show()
+	
+	
 	$Buy0/Cost.text = "[center]" + str(potion_cost)
 	$Buy1/Cost.text = "[center]" + str(potion_cost)
 	
@@ -47,6 +51,7 @@ func _on_buy_0_pressed() -> void:
 		PlayerResources.money -= die_cost
 		PlayerResources.items.append($Buy0/PotionPanel.id)
 		$Buy0/PotionPanel.hide()
+		$Buy.play()
 
 
 
@@ -55,6 +60,7 @@ func _on_buy_1_pressed() -> void:
 		PlayerResources.money -= die_cost
 		PlayerResources.items.append($Buy1/PotionPanel.id)
 		$Buy1/PotionPanel.hide()
+		$Buy.play()
 
 
 func _on_buy_2_pressed() -> void:
@@ -62,6 +68,7 @@ func _on_buy_2_pressed() -> void:
 		PlayerResources.money -= die_cost
 		emit_signal("bought_die", $Buy2/DieRep.values, $Buy2/DieRep.color)
 		$Buy2/DieRep.hide()
+		$Buy.play()
 
 
 func _on_buy_3_pressed() -> void:
@@ -69,3 +76,4 @@ func _on_buy_3_pressed() -> void:
 		PlayerResources.money -= die_cost
 		emit_signal("bought_die", $Buy3/DieRep.values, $Buy3/DieRep.color)
 		$Buy3/DieRep.hide()
+		$Buy.play()

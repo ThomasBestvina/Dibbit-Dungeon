@@ -1,9 +1,10 @@
-[gd_scene load_steps=77 format=3 uid="uid://go68735wem6n"]
+[gd_scene load_steps=85 format=3 uid="uid://go68735wem6n"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gblby"]
 [ext_resource type="PackedScene" uid="uid://b51iigyvgwb8e" path="res://Objects/DiceRoom.tscn" id="2_dqqug"]
 [ext_resource type="PackedScene" uid="uid://c5nl02wkbim7b" path="res://Objects/Entity.tscn" id="3_hkwdk"]
 [ext_resource type="Texture2D" uid="uid://c6t76gqprvfi0" path="res://Assets/2D/UI/buttonRoll.png" id="3_ude7d"]
+[ext_resource type="Texture2D" uid="uid://c6e37yl6ml3un" path="res://Assets/2D/Environment/doorSigns.png" id="4_7dpff"]
 [ext_resource type="Texture2D" uid="uid://kpp8n3xjxohj" path="res://Assets/2D/Environment/dungeonWall.png" id="4_np2c7"]
 [ext_resource type="Texture2D" uid="uid://ooy5qvda47f2" path="res://Assets/2D/Characters/PlayerCharacter.png" id="5_bp1ms"]
 [ext_resource type="FontFile" uid="uid://cxlec2b531som" path="res://Assets/Fonts/Bitmgothic.ttf" id="6_naelx"]
@@ -20,6 +21,9 @@
 [ext_resource type="Texture2D" uid="uid://b5l10ehsyab2p" path="res://Assets/2D/UI/buttonTrash.png" id="16_62p6q"]
 [ext_resource type="Script" path="res://Scripts/Trash.gd" id="17_6cvfe"]
 [ext_resource type="Texture2D" uid="uid://dqvyg6uj7xt8j" path="res://icon.svg" id="20_5n3k3"]
+[ext_resource type="AudioStream" uid="uid://ck85f4oggoqmy" path="res://Assets/Sound/select.wav" id="21_4jbk1"]
+[ext_resource type="AudioStream" uid="uid://bqjuox6ru6yk5" path="res://Assets/Sound/trashitem.wav" id="22_3oudr"]
+[ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="23_48sfk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdu42"]
 texture = ExtResource("4_np2c7")
@@ -50,6 +54,35 @@ region = Rect2(128.854, 0, 62.3386, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqw27"]
 atlas = ExtResource("15_ci400")
 region = Rect2(65.0033, 0, 62.0269, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsbh7"]
+atlas = ExtResource("4_7dpff")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nasv0"]
+atlas = ExtResource("4_7dpff")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfoay"]
+atlas = ExtResource("4_7dpff")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sg576"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsbh7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nasv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfoay")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_w2k25"]
 viewport_path = NodePath("SubViewport")
@@ -398,33 +431,6 @@ tracks/1/keys = {
 "values": [Vector2(980, 54), Vector2(656, 54)]
 }
 
-[sub_resource type="Animation" id="Animation_6luna"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TransitionAnimation/curt1:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-339, 71)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TransitionAnimation/curt2:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(980, 54)]
-}
-
 [sub_resource type="Animation" id="Animation_0enm4"]
 resource_name = "OpenCurtains"
 length = 1.5
@@ -451,6 +457,33 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(656, 56), Vector2(980, 54)]
+}
+
+[sub_resource type="Animation" id="Animation_6luna"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionAnimation/curt1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-339, 71)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionAnimation/curt2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(980, 54)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ekcn3"]
@@ -495,6 +528,12 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Doors/LeftDoor"]
+position = Vector2(147.229, 31.9634)
+rotation = 1.5708
+sprite_frames = SubResource("SpriteFrames_sg576")
+frame = 2
+
 [node name="RightDoor" type="TextureButton" parent="Doors"]
 visible = false
 layout_mode = 0
@@ -506,6 +545,11 @@ disabled = true
 texture_normal = SubResource("AtlasTexture_be463")
 texture_pressed = SubResource("AtlasTexture_qfog2")
 texture_hover = SubResource("AtlasTexture_nqw27")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Doors/RightDoor"]
+position = Vector2(52, -21)
+rotation = 0.00704634
+sprite_frames = SubResource("SpriteFrames_sg576")
 
 [node name="Label" type="Label" parent="Doors/RightDoor"]
 visible = false
@@ -625,10 +669,10 @@ offset_bottom = 167.0
 [node name="Campfire" parent="." instance=ExtResource("13_p1nx0")]
 visible = false
 layout_mode = 1
-offset_left = 301.0
-offset_top = 209.0
-offset_right = 301.0
-offset_bottom = 209.0
+offset_left = 318.0
+offset_top = 232.0
+offset_right = 318.0
+offset_bottom = 232.0
 
 [node name="Trash" type="AnimatedSprite2D" parent="."]
 position = Vector2(621, 341)
@@ -720,6 +764,16 @@ texture = ExtResource("20_5n3k3")
 
 [node name="TransitionTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SelectAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_4jbk1")
+
+[node name="TrashItem" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_3oudr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, 180)
+script = ExtResource("23_48sfk")
 
 [connection signal="pressed" from="Doors/LeftDoor" to="." method="_on_left_door_pressed"]
 [connection signal="pressed" from="Doors/RightDoor" to="." method="_on_right_door_pressed"]

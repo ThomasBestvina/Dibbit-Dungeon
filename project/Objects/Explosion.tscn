@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dd531bodnqcqe"]
+
+[ext_resource type="Script" path="res://explosion.gd" id="1_q6bmq"]
+[ext_resource type="AudioStream" uid="uid://bwbqhoroo4iva" path="res://Assets/Sound/enemydeath.wav" id="2_3ru1f"]
+
+[node name="Explosion" type="Node2D"]
+script = ExtResource("1_q6bmq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_3ru1f")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

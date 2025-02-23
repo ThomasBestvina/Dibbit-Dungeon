@@ -7,6 +7,7 @@ extends Control
 @onready var ent_preload = preload("res://Objects/Entity.tscn")
 @onready var enemies_node = $Players/EnemiesPlacement
 @onready var potion_button_preload = preload("res://Objects/PotionButton.tscn")
+@onready var explosion = preload("res://Objects/Explosion.tscn")
 
 var entities: Array[Entity] = []
 
@@ -88,6 +89,7 @@ func _process(delta: float) -> void:
 	for i in $Players/Player/Potions.get_children():
 		if i.id == "heal":
 			$Players/Player.remove_health(-$Players/Player.max_health*0.25)
+			i.queue_free()
 
 func pick_rooms():
 	$Doors/LeftDoor.show()
@@ -95,7 +97,9 @@ func pick_rooms():
 	if(int(budget) == 3):
 		
 		$Doors/LeftDoor/Label.text = "s"
+		$Doors/LeftDoor/AnimatedSprite2D.frame = 0
 		$Doors/RightDoor/Label.text = "f"
+		$Doors/RightDoor/AnimatedSprite2D.frame = 2
 		return
 	# Pick from 3 rooms, campfire, shop, combat.
 	# Only 1 and shop can be selected, any number of combats (well really 2)
@@ -104,18 +108,23 @@ func pick_rooms():
 	var shop: bool = randi_range(1,5) <= 2
 	if cmpfire:
 		$Doors/LeftDoor/Label.text = "c"
+		$Doors/LeftDoor/AnimatedSprite2D.frame = 1
 		cmpfire = false
 	elif shop:
 		$Doors/LeftDoor/Label.text = "s"
+		$Doors/LeftDoor/AnimatedSprite2D.frame = 0
 		shop = false
 	else:
 		$Doors/LeftDoor/Label.text = "f"
+		$Doors/LeftDoor/AnimatedSprite2D.frame = 2
 	
 	if shop:
 		$Doors/RightDoor/Label.text = "s"
+		$Doors/RightDoor/AnimatedSprite2D.frame = 0
 		shop = false
 	else:
 		$Doors/RightDoor/Label.text = "f"
+		$Doors/RightDoor/AnimatedSprite2D.frame = 2
 
 func _on_dice_room_die_finished(values: Array) -> void:
 	if(len(values) == 0): return
@@ -210,10 +219,13 @@ func _on_player_selected(node: Entity) -> void:
 	if(len(dice_spawner.dice) != 0): return
 	if(selected != null):
 		selected.get_node("Selected").hide()
+	if(selected != node):
+		$SelectAudio.play()
 	selected = node
 	selected.get_node("Selected").show()
 	if(turn == 0):
 		roll_button.disabled = false
+
 
 
 func _on_roll_pressed() -> void:
@@ -233,7 +245,12 @@ func kill_dead_enemies():
 		if(i.health <= 0):
 			PlayerResources.money += int(i.max_health/10)+len(i.dice_values)
 			entities.erase(i)
+			if !i.player:
+				var expl = explosion.instantiate()
+				add_child(expl)
+				expl.position = i.position
 			i.queue_free()
+			$Camera2D.start_shake(10.0,0.5)
 		
 
 # c = campfire
@@ -247,21 +264,26 @@ func manage_room_change(room: String):
 			$Shop.show()
 			$Shop.generate_shop()
 			$DiceMath.hide()
+			$Environment/DiceBorder.hide()
 			$Doors/LeftDoor.hide()
 			$Doors/LeftDoor.disabled = true
 			$Doors/RightDoor/Label.text = "f"
+			$Doors/RightDoor/AnimatedSprite2D.frame = 2
 			$Doors/RightDoor.show()
 			$Campfire.hide()
 		"c":
 			$Campfire.show()
+			$Environment/DiceBorder.hide()
 			$Shop.hide()
 			$DiceMath.hide()
 			$Doors/LeftDoor.hide()
 			$Doors/RightDoor.show()
 			$Doors/LeftDoor.disabled = true
 			$Doors/RightDoor/Label.text = "f"
+			$Doors/RightDoor/AnimatedSprite2D.frame = 2
 		"f":
 			$Shop.hide()
+			$Environment/DiceBorder.show()
 			$Doors/LeftDoor.hide()
 			$Doors/RightDoor.hide()
 			$DiceMath.show()

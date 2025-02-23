@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=4 uid="uid://bk3ricuscwxhi"]
+[gd_scene load_steps=36 format=4 uid="uid://bk3ricuscwxhi"]
 
 [ext_resource type="Script" path="res://Scripts/Dice.gd" id="1_yptd6"]
 [ext_resource type="Texture2D" uid="uid://b4qhj8xl35la6" path="res://Assets/2D/DiceFaces/DiceFacesSheet.png" id="2_382bx"]
+[ext_resource type="AudioStream" uid="uid://bytqegcmjyils" path="res://Assets/Sound/die_bounce.wav" id="3_53a5a"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fxeaq"]
 friction = 0.7
@@ -232,6 +233,9 @@ animations = [{
 [sub_resource type="BoxShape3D" id="BoxShape3D_ep7qj"]
 size = Vector3(0.3, 0.3, 0.3)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_go0iv"]
+size = Vector3(0.31, 0.31, 0.31)
+
 [node name="Die" type="RigidBody3D"]
 mass = 0.3
 physics_material_override = SubResource("PhysicsMaterial_fxeaq")
@@ -277,3 +281,14 @@ sprite_frames = SubResource("SpriteFrames_dy6t6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ep7qj")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_go0iv")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_53a5a")
+volume_db = -12.0
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
