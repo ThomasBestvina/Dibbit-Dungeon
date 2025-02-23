@@ -32,6 +32,11 @@ func _ready() -> void:
 	_on_dice_room_die_finished([])
 
 func _process(delta: float) -> void:
+	if(get_node_or_null("Players/Player") == null):
+		get_tree().change_scene_to_packed(preload("res://Scene/Menu.tscn"))
+	if(get_node_or_null("remove") != null && len(PlayerResources.items) == 0) :
+		_on_potion_cancel_pressed()
+		get_node("remove").queue_free()
 	if(turn != 0 || ( turn == 0 && selected == null ) ):
 		roll_button.disabled = true
 	kill_dead_enemies()
@@ -68,11 +73,15 @@ func _process(delta: float) -> void:
 		elif(turn != 0 && defend):
 			total *= 0.5
 			$DiceMath.text += "[color=#666666]=" + str(total)
-		else:
+		elif(turn == 0):
 			if(!healroll):
 				$DiceMath.text += "[color=#FFFFFF]=" + str(total)
 			if(healroll):
 				$DiceMath.text += "[color=#FFFFFF]=" + str(total) + "[color=009933], " + str(total*0.1)
+		else:
+			$DiceMath.text += "[color=#FFFFFF]=" + str(total)
+		
+		
 	
 	if(turn == 0 && len(dice_spawner.dice) == 0):
 		items_button.disabled = false
@@ -160,6 +169,7 @@ func _on_dice_room_die_finished(values: Array) -> void:
 	handle_turn()
 
 func handle_turn():
+	entities[turn].attack()
 	if turn == 0: 
 		for i in $Players/Player/Potions.get_children():
 			i.queue_free()
@@ -167,7 +177,6 @@ func handle_turn():
 		roll_button.disabled = false
 		return
 	dice_spawner.roll_dice(entities[turn].dice_values, entities[turn].dice_color_values)
-	entities[turn].attack()
 
 
 func spawn_wave():

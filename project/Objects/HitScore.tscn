@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmacey53lvekj"]
+
+[ext_resource type="FontFile" uid="uid://dxugtxh0y4c00" path="res://Assets/Fonts/FFFFORWA.TTF" id="1_bkaiq"]
+[ext_resource type="Script" path="res://HitScore.gd" id="2_31aw7"]
+
+[node name="HitScore" type="RichTextLabel"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/normal_font = ExtResource("1_bkaiq")
+bbcode_enabled = true
+text = "[color=ff0000]42!"
+script = ExtResource("2_31aw7")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

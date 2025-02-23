@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhod71p8222i2"]
 
-[ext_resource type="Texture2D" uid="uid://ruglhga3vyjw" path="res://Assets/2D/UI/Potion.png" id="1_lodnn"]
+[ext_resource type="Texture2D" uid="uid://de8fcwm3os5lu" path="res://Assets/2D/items/potion.png" id="1_4w052"]
 [ext_resource type="Script" path="res://Scripts/PotionButton.gd" id="2_o8mhc"]
 
 [node name="PotionButton" type="Button"]
@@ -8,7 +8,7 @@ modulate = Color(0.185996, 0.180973, 0.154765, 1)
 offset_right = 8.0
 offset_bottom = 8.0
 text = "ds"
-icon = ExtResource("1_lodnn")
+icon = ExtResource("1_4w052")
 script = ExtResource("2_o8mhc")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

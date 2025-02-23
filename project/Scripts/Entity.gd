@@ -16,18 +16,28 @@ signal selected(node: Entity)
 
 @onready var potion_pre = preload("res://Objects/PotionPanel.tscn")
 
+var taking_damage: bool
+@export var damage_flash_times: float = 0.1
 
+@onready var hit_text = preload("res://Objects/HitScore.tscn")
 
 func _ready() -> void:
 	$Selected.play()
 	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
-	if(player):
-		$Entity.play("idle_combat")
+	$Entity.play()
+	$heartCard.play()
+	$Horse.play()
+
+func _process(_delta: float) -> void:
+	if taking_damage:
+		$Entity.play("hit")
+		$heartCard.play("hit")
+		$Horse.play("hit")
 
 func init():
 	if player: return
-	if max_health > 50*len(dice_values):
+	if max_health > 30*len(dice_values):
 		$Entity.hide()
 		$Horse.hide()
 		$heartCard.show()
@@ -49,14 +59,45 @@ func remove_health(val: int):
 	$HealthText.text = "[center]"+str(health)
 	$HealthBar.value = float(health)/max_health*100
 	if(val > 0):
+		var damage_amount = hit_text.instantiate()
+		add_child(damage_amount)
+		damage_amount.text = "[color=ff3300]" + str(val)
+		damage_amount.scale = Vector2.ONE*min(max(0.25,(-val)/(max_health/2) ),2)
+		damage_amount.position += Vector2(randi_range(0,41),-randi_range(0,63))
+		taking_damage = true
 		$HitPlayer.play()
+		begin_toggle()
+		$TakingDamage.start(0.75)
 		PlayerResources.camera.start_shake(5.0,0.5)
 	if(val < 0):
+		var heal_amount = hit_text.instantiate()
+		add_child(heal_amount)
+		heal_amount.text = "[color=33cc33]" + str(-val)
+		heal_amount.scale =  Vector2.ONE*min(max(0.25,(-val)/(max_health/2) ),2)
+		heal_amount.position += Vector2(randi_range(0,41),-randi_range(0,63))
 		$HealPlayer.play()
 
 func attack():
 	$heartCard.play("attack")
 	$Horse.play("attack")
+	$Entity.play("attack")
+
+func begin_toggle():
+	while(taking_damage):
+		await get_tree().create_timer(damage_flash_times).timeout
+		if(!taking_damage): return
+		$Entity.modulate = toggle_color($Entity.modulate)
+		$heartCard.modulate = toggle_color($heartCard.modulate)
+		$Horse.modulate = toggle_color($Horse.modulate)
+
+
+func toggle_color(color: Color) -> Color:
+	if color == Color(1, 1, 1):  # White
+		return Color(1, 0, 0)  # Red
+	elif color == Color(1, 0, 0):  # Red
+		return Color(1, 1, 1)  # White
+	return color  # Return the same color if it's neither red nor white
+
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton && !player:
@@ -75,3 +116,17 @@ func _on_horse_animation_finished() -> void:
 
 func _on_heart_card_animation_finished() -> void:
 	$heartCard.play("default")
+
+
+func _on_entity_animation_finished() -> void:
+	$Entity.play("default")
+
+
+func _on_taking_damage_timeout() -> void:
+	taking_damage = false
+	$Entity.modulate = Color.WHITE
+	$heartCard.modulate = Color.WHITE
+	$Horse.modulate = Color.WHITE
+	$Entity.play("default")
+	$heartCard.play("default")
+	$Horse.play("default")

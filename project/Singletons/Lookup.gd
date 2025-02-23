@@ -82,8 +82,10 @@ func generate_die() -> Array:
 	# haha bad solution!
 	var weighted_array = [1, 1, 1, 2, 2, 2, 0, 3,3, 4,4, 5, 6]
 	
+	var curse_weights = [13,13,13,14,14,15,19,19,19,20,20,21,21]
+	
 	## constant and curse
-	var values = [randi_range(1,6), weighted_array[randi() % weighted_array.size()]*randi_range(3,4)]
+	var values = [randi_range(1,6), curse_weights[randi() % curse_weights.size()]]
 	
 	for i in range(4):
 		values.append(weighted_array[randi() % weighted_array.size()]*randi_range(1,4))
