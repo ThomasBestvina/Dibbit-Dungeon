@@ -16,6 +16,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_111bm")
 
+[node name="0" type="Sprite2D" parent="."]
+position = Vector2(-96, 32)
+texture = ExtResource("2_i15di")
+
+[node name="Pedestal" type="Sprite2D" parent="."]
+position = Vector2(-32, 32)
+texture = ExtResource("2_i15di")
+
+[node name="Pedestal2" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+texture = ExtResource("2_i15di")
+
+[node name="Pedestal3" type="Sprite2D" parent="."]
+position = Vector2(96, 32)
+texture = ExtResource("2_i15di")
+
 [node name="Buy0" type="Button" parent="."]
 layout_mode = 0
 offset_left = -115.0
@@ -24,10 +40,6 @@ offset_right = -69.0
 offset_bottom = 94.0
 theme_override_fonts/font = ExtResource("2_6mgxb")
 text = "Buy"
-
-[node name="0" type="Sprite2D" parent="Buy0"]
-position = Vector2(19, -32)
-texture = ExtResource("2_i15di")
 
 [node name="Cost" type="RichTextLabel" parent="Buy0"]
 layout_mode = 0
@@ -66,10 +78,6 @@ offset_right = -12.0
 offset_bottom = 95.0
 theme_override_fonts/font = ExtResource("2_6mgxb")
 text = "Buy"
-
-[node name="Pedestal" type="Sprite2D" parent="Buy1"]
-position = Vector2(18, -32)
-texture = ExtResource("2_i15di")
 
 [node name="Cost" type="RichTextLabel" parent="Buy1"]
 layout_mode = 0
@@ -110,10 +118,6 @@ offset_bottom = 95.0
 theme_override_fonts/font = ExtResource("2_6mgxb")
 text = "Buy"
 
-[node name="Pedestal2" type="Sprite2D" parent="Buy2"]
-position = Vector2(19, -32)
-texture = ExtResource("2_i15di")
-
 [node name="Cost" type="RichTextLabel" parent="Buy2"]
 layout_mode = 0
 offset_top = -20.0
@@ -144,10 +148,6 @@ offset_right = 116.0
 offset_bottom = 95.0
 theme_override_fonts/font = ExtResource("2_6mgxb")
 text = "Buy"
-
-[node name="Pedestal3" type="Sprite2D" parent="Buy3"]
-position = Vector2(18, -32)
-texture = ExtResource("2_i15di")
 
 [node name="Cost" type="RichTextLabel" parent="Buy3"]
 layout_mode = 0

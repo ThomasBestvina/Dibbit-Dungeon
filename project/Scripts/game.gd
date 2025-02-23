@@ -19,6 +19,8 @@ var selected: Entity = null
 
 var rooms_picked = false
 
+var last_clicked: String = ""
+
 func _ready() -> void:
 	randomize()
 	entities.append($Players/Player)
@@ -88,6 +90,8 @@ func _process(delta: float) -> void:
 			$Players/Player.remove_health(-$Players/Player.max_health*0.25)
 
 func pick_rooms():
+	$Doors/LeftDoor.show()
+	$Doors/RightDoor.show()
 	if(int(budget) == 3):
 		
 		$Doors/LeftDoor/Label.text = "s"
@@ -221,7 +225,7 @@ func _on_roll_pressed() -> void:
 	if(double_roll):
 		dice_spawner.roll_dice($DiceManager.get_player_die_values(), $DiceManager.get_player_die_colors())
 	roll_button.disabled = true
-	if(get_node("remove") != null):
+	if(get_node_or_null("remove") != null):
 		get_node("remove").queue_free()
 
 func kill_dead_enemies():
@@ -245,18 +249,21 @@ func manage_room_change(room: String):
 			$DiceMath.hide()
 			$Doors/LeftDoor.hide()
 			$Doors/LeftDoor.disabled = true
-			$Doors/RightDoor.text = "f"
+			$Doors/RightDoor/Label.text = "f"
+			$Doors/RightDoor.show()
 			$Campfire.hide()
 		"c":
 			$Campfire.show()
 			$Shop.hide()
 			$DiceMath.hide()
 			$Doors/LeftDoor.hide()
+			$Doors/RightDoor.show()
 			$Doors/LeftDoor.disabled = true
-			$Doors/RightDoor.text = "f"
+			$Doors/RightDoor/Label.text = "f"
 		"f":
 			$Shop.hide()
-			$Doors/LeftDoor.show()
+			$Doors/LeftDoor.hide()
+			$Doors/RightDoor.hide()
 			$DiceMath.show()
 			$Doors/LeftDoor.disabled = true
 			$Doors/RightDoor.disabled = true
@@ -268,11 +275,13 @@ func manage_room_change(room: String):
 
 
 func _on_left_door_pressed() -> void:
-	manage_room_change($Doors/LeftDoor/Label.text)
+	play_up_animation()
+	last_clicked = $Doors/LeftDoor/Label.text
 
 
 func _on_right_door_pressed() -> void:
-	manage_room_change($Doors/RightDoor/Label.text)
+	play_up_animation()
+	last_clicked = $Doors/RightDoor/Label.text
 
 
 func _on_texture_button_pressed() -> void:
@@ -290,5 +299,32 @@ func _on_texture_button_pressed() -> void:
 
 func _on_potion_cancel_pressed() -> void:
 	$PotionCancel.position.x -= 200
-	if(get_node("remove") != null):
+	if(get_node_or_null("remove") != null):
 		get_node("remove").queue_free()
+
+func play_up_animation():
+	$ToDoor.show()
+	$Players.hide()
+	$ToDoor/UpPath/AnimatedSprite2D.play("Running")
+	$ToDoor/AnimationPlayer.play("ExitUp")
+	$TransitionTimer.start(2)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if(anim_name == "OpenCurtains"): return
+	manage_room_change(last_clicked)
+	$TransitionAnimation/AnimationPlayer.play("OpenCurtains")
+	$ToStart/AnimationPlayer.play("StartDown")
+	$ToStart/UpPath/AnimatedSprite2D.play("Running")
+	$ToStart.show()
+	$ToDoor.hide()
+	$Players.show()
+	$Players/Player.hide()
+
+
+func _on_transition_timer_timeout() -> void:
+	$TransitionAnimation/AnimationPlayer.play("CloseCurtains")
+
+
+func _start_animation_finished(anim_name: StringName) -> void:
+	$ToStart.hide()
+	$Players/Player.show()
